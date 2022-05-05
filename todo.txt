@@ -1,0 +1,17 @@
+game engine:
+
+sound system
+collision system
+map system
+(animation)
+
+
+documentation:
+
+html explain how the engine works
+
+
+game-examples:
+
+pacman game
+super mario ?
