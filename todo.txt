@@ -1,10 +1,12 @@
 game engine:
 
-sound system
-collision system
 map system
-(animation)
-
+(
+responsive canvas size 
+sound system
+animation
+multiplayer
+)
 
 documentation:
 
