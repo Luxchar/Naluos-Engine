@@ -1,6 +1,6 @@
 game engine:
 
-map system
+map system fix bug 
 (
 responsive canvas size 
 sound system
