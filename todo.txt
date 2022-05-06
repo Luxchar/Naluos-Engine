@@ -1,6 +1,9 @@
 game engine:
 
-map system fix bug 
+issue with map refresh on player movement
+include pacman in map (double array) to make it easier to check for collisions
+jump system (for mario game)
+
 (
 responsive canvas size 
 sound system

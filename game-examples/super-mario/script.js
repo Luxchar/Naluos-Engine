@@ -1,6 +1,6 @@
-import Game from "../engine/Game.js";
-import Player from "../engine/Player.js";
-import Entity from "../engine/Entity.js";
+import Game from "../../engine/Game.js";
+import Player from "../../engine/Player.js";
+import Entity from "../../engine/Entity.js";
 import PacmanMap from "./map.js";
 
 var MainGame = new Game({
@@ -14,16 +14,18 @@ MainGame.start(); // start game
 
 var PacMap = PacmanMap
 
-var Block = new Entity({x:0,y:0,width:100,height:100}, "./block.png")
-var Sky = new Entity({x:0,y:0,width:100,height:100}, "./sky.png")
+var Block = new Entity({x:0,y:0,width:100,height:100}, "./assets/img/block.png")
+var Sky = new Entity({x:0,y:0,width:100,height:100}, "./assets/img/sky.png")
+var Grass = new Entity({x:0,y:0,width:100,height:100}, "https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/5cde149a93033d9.png")
+var TopSky = new Entity({x:0,y:0,width:100,height:100}, "")
 var PacMapDefine = new Map([
     [0, Sky], 
     [1, Block], 
-    [2, Block], 
-    [3, Block]
+    [2, TopSky], 
+    [3, Grass]
 ]) //define map properties
 
-var player = new Player({name:"pacman",imagePath:"./pacman.png",x:0,y:0,width:100,height:100}) //create player
+var player = new Player({name:"pacman",imagePath:"./assets/img/mario.jpg",x:0,y:0,width:100,height:100}) //create player
 MainGame.add(player, true) //add player to 
 
 var playerMvt = [["z", "up"],["d", "right"], ["q", "left"], ["s", "down"], ["ArrowUp", "up"], ["ArrowRight", "right"], ["ArrowLeft", "left"], ["ArrowDown", "down"]] //define player mvt

@@ -1,13 +1,11 @@
 import Entity from "./Entity.js";
 export default class Player extends Entity{ //load entity with parameters
     constructor( {name, imagePath = "", x,y,width, height} ) {
-        console.log(imagePath)
         super(x,y,width,height);
         this.name = name
         this.imagePath = this.SetImgSprite(imagePath) 
         this.InitEntityPosition(x, y);
         this.InnerEntitySize(width, height);
-        console.log(this.imagePath)
     }
     
     SetImgSprite(imgPath = "") { //set sprite img
@@ -18,6 +16,7 @@ export default class Player extends Entity{ //load entity with parameters
 
     AssignMovementEvent(input, movement, context, map, speed = 0.1) { //assign input to movement
         document.addEventListener('keydown', (e) =>{
+            console.log(map)
             var obj = map
                 if ((e.key == input || e.key == input) && movement == "up"){
                     if(this.y == 0 ) {
@@ -26,7 +25,6 @@ export default class Player extends Entity{ //load entity with parameters
                         obj.y = 0
                     }
                     obj.y -= speed
-                    obj.imagePath.style.transform = "rotate(180deg)";
                     context.clearRect(obj.x,obj.y+speed,obj.width,obj.height)
                 }
                 if ((e.key == input || e.key == input ) && movement == "down" ) {
@@ -58,6 +56,7 @@ export default class Player extends Entity{ //load entity with parameters
                     obj.x -= speed
                     context.clearRect(obj.x+speed,obj.y,obj.width,obj.height)
                 }
+            context.globalCompositeOperation = "source-over";
             context.drawImage(obj.imagePath, obj.x,obj.y,obj.width,obj.height)
         }, true);
     } 

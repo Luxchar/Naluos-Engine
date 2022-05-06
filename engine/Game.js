@@ -1,5 +1,6 @@
 export default class Game { //load map with parameters (div id, name, width, height, assets to load)
-    constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth = 800, GameHeight = 600}){
+    constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth, GameHeight }){
+        console.log(GameWidth)
         this.Environment = document.querySelector(DivHtmlID)
         this.GameName = GameName
         this.GameWidth = GameWidth
@@ -25,17 +26,23 @@ export default class Game { //load map with parameters (div id, name, width, hei
             this.ctx.drawImage(this.img , 0, 0,EntityObject.width, EntityObject.height);
             };
         this.objects.set(EntityObject.name, EntityObject)
-    } 
+    }
 
-    setMap(ArrayMap, DefineMap = {}){
+    setMap(ArrayMap, DefineMap = {}) {
         var row = this.GameWidth / (ArrayMap[0].length)
         var column = this.GameHeight / (ArrayMap.length)
         for (var i = 0; i < ArrayMap.length; i++) {
             for (var j = 0; j < ArrayMap[i].length; j++) {
-                this.ctx.fillRect(j * row, i * column, row, column)
-                this.ctx.fillStyle = "#F00000"
+                this.ctx.globalCompositeOperation='destination-over';
+                var obj = DefineMap.get(ArrayMap[i][j])
+                if(obj.img != "") this.ctx.drawImage(obj.img, j * row, i * column, row, column)
+                else this.ctx.drawImage(obj.img, j * row, i * column, row, column)
+                this.ctx.fillStyle = '#F00000'
             }
         }
+    }
+    clearMap(){
+     this.ctx.clearRect(0,0,this.GameWidth, this.GameHeight)   
     }
 }
 
