@@ -1,5 +1,6 @@
 import Player from "./src/Player.js";
 import Entity from "./src/Entity.js";
+import Sound from "./src/Sound.js"
 
 export default class Game{
     constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth = 800, GameHeight = 500}){
@@ -12,6 +13,7 @@ export default class Game{
         this.Entities = new Map()
         this.Players = new Map()
         this.Objects = new Map()
+        this.Sounds = new Map()
     }
 
     get AllPlayers(){
@@ -36,6 +38,15 @@ export default class Game{
 
     ClearCanvas(){
         this.Context.clearRect(0, 0, this.Canvas.width, this.Canvas.height);
+    }
+
+    addSound({name, PathOrUrl, AudioSpeed = 1, Volume = 1}){
+        this.Sounds.set(name, new Sound(PathOrUrl, AudioSpeed, Volume))
+    }
+    
+    playSound(name){
+        var Pao = this.Sounds.get(name)
+        return Pao.play()
     }
 
     NewPlayer({name, x, y, width, height, img}) {

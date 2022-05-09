@@ -43,6 +43,16 @@ var MapDefine = new Map([
     [1, Grass]
 ]) //define map properties
 
+MainGame.addSound({
+    name: "ThemeSound",
+    PathOrUrl: "./NaluosEngine/assets/sounds/theme_music.mp3",
+    AudioSpeed: 1,
+    Volume: 0.7,
+})
+
+
+console.log(MainGame.playSound("ThemeSound"))
+
 Player1.AssignMovementEvent("d", "right", 40)
 Player1.AssignMovementEvent("q", "left", 40)
 Player1.AssignMovementEvent("space", "jump", 40)
