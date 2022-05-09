@@ -11,6 +11,7 @@ export default class Game{
         this.Context = this.Canvas.getContext('2d')
         this.Entities = new Map()
         this.Players = new Map()
+        this.Objects = new Map()
     }
 
     get AllPlayers(){
@@ -51,20 +52,23 @@ export default class Game{
             name, x, y, width, height, img
         })
         this.Entities.set(ent.nameOfEntity, ent)
+        this.Objects.set(ent.nameOfEntity, ent)
         return ent
     }  
 
     DrawMap(ArrayMap, DefineMap = {}) {
-        var row = this.GameWidth / (ArrayMap[0].length)
-        var column = this.GameHeight / (ArrayMap.length)
-        for (var i = 0; i < ArrayMap.length; i++) {
-            for (var j = 0; j < ArrayMap[i].length; j++) {
-                this.Context.beginPath()
-                this.Context.globalCompositeOperation='destination-over';
-                var obj = DefineMap.get(ArrayMap[i][j])
-                if(obj.img != "Rectangle") this.Context.drawImage(obj.img, j * row, i * column, row, column)
-                else this.Context.rect(obj.img, j * row, i * column, row, column)
-                this.Context.fillStyle = '#F00000'
+        if (ArrayMap[0].length > 0){
+            var row = this.GameWidth / (ArrayMap[0].length)
+            var column = this.GameHeight / (ArrayMap.length)
+            for (var i = 0; i < ArrayMap.length; i++) {
+                for (var j = 0; j < ArrayMap[i].length; j++) {
+                    this.Context.beginPath()
+                    this.Context.globalCompositeOperation='destination-over';
+                    var obj = DefineMap.get(ArrayMap[i][j])
+                    if(obj.img != "Rectangle") this.Context.drawImage(obj.img, j * row, i * column, row, column)
+                    else this.Context.rect(obj.img, j * row, i * column, row, column)
+                    this.Context.fillStyle = '#F00000'
+                }
             }
         }
     }

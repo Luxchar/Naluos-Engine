@@ -1,15 +1,14 @@
 game engine:
 
-issue with map refresh on player movement
-include pacman in map (double array) to make it easier to check for collisions
-jump system (for mario game)
-
-(
-responsive canvas size 
+Luc:
 sound system
-animation
+smoother movement
+responsive canvas size 
 multiplayer
-)
+
+Léo:
+animation
+
 
 documentation:
 
@@ -18,5 +17,5 @@ html explain how the engine works
 
 game-examples:
 
+super mario
 pacman game
-super mario ?

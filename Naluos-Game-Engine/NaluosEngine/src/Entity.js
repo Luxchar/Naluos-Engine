@@ -32,6 +32,10 @@ export default class Entity{ //load entity with parameters
         return this.name
     }
 
+    get isEntity(){
+        return true
+    }
+
     get isImage(){
         if(this.img === "Rectangle") return false
         return true
