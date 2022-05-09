@@ -37,13 +37,6 @@ export default class Player extends Entity{
             if (e.key == input && movement == "right") this.velocity.x = 10
             if (e.key == input && movement == "left") this.velocity.x = -10
             if (e.key == " " && movement == "jump") this.velocity.y -= 15
-
-            /*if (this.isPressed.jump) this.velocity.y -= 15
-            if (this.isPressed.up) obj.y -= speed
-            if (this.isPressed.down) obj.y += speed
-            if (this.isPressed.right) obj.x += speed
-            if (this.isPressed.left) obj.x -= speed*/
-
         }, true);
 
         this.map.set(obj.name, obj)
