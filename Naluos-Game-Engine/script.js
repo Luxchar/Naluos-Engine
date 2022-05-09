@@ -10,12 +10,17 @@ var MainGame = new Game({
 
 MainGame.Start()
 
-var Object = MainGame.NewEntity({
-    name: "Objet",
-    x: 50, y: 300,
-    width: 60, height: 60,
-    img: "./NaluosEngine/assets/img/block.png"
-})
+
+for (let index = 1; index <= 3; index++) {
+    MainGame.NewEntity({
+        name: "Objet" + index,
+        x: index*60, y: 300,
+        width: 60, height: 60,
+        img: "./NaluosEngine/assets/img/block.png"
+    })
+}
+
+console.log(MainGame.AllEntities)
 
 var Player1 = MainGame.NewPlayer({
     name: "Nagibator",
