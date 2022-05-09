@@ -46,12 +46,14 @@ var MapDefine = new Map([
 MainGame.addSound({
     name: "ThemeSound",
     PathOrUrl: "./NaluosEngine/assets/sounds/theme_music.mp3",
-    AudioSpeed: 1,
-    Volume: 0.7,
 })
 
+MainGame.playSoundOf({
+    name: "ThemeSound",
+    volume: 0.2,
+})
 
-console.log(MainGame.playSound("ThemeSound"))
+console.log()
 
 Player1.AssignMovementEvent("d", "right", 40)
 Player1.AssignMovementEvent("q", "left", 40)

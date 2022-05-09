@@ -1,6 +1,5 @@
 import Player from "./src/Player.js";
 import Entity from "./src/Entity.js";
-import Sound from "./src/Sound.js"
 
 export default class Game{
     constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth = 800, GameHeight = 500}){
@@ -40,13 +39,29 @@ export default class Game{
         this.Context.clearRect(0, 0, this.Canvas.width, this.Canvas.height);
     }
 
-    addSound({name, PathOrUrl, AudioSpeed = 1, Volume = 1}){
-        this.Sounds.set(name, new Sound(PathOrUrl, AudioSpeed, Volume))
+    async addSound({name, PathOrUrl}){
+        await this.Sounds.set(name, new Audio(PathOrUrl) )
+    }
+
+    getSound(name){
+        return this.Sounds.get(name)    
+    }
+
+    playSoundOf({name, speed = 1 , volume = 1, loop = true}){
+        document.addEventListener("keypress", () =>{
+            var aud = this.Sounds.get(name)
+            aud.playbackRate = speed
+            aud.loop = loop
+            aud.volume = volume
+            aud.play()
+        })
     }
     
-    playSound(name){
-        var Pao = this.Sounds.get(name)
-        return Pao.play()
+    async playSound(name) {
+        document.body.addEventListener("mousemove", function () {
+            var a = this.Sounds.get(name)
+            return a
+        })
     }
 
     NewPlayer({name, x, y, width, height, img}) {
