@@ -20,6 +20,15 @@ for (let index = 1; index <= 3; index++) {
     })
 }
 
+for (let index = 7; index <= 11; index++) {
+    MainGame.NewEntity({
+        name: "Objet" + index,
+        x: index*60, y: 300,
+        width: 60, height: 60,
+        img: "./NaluosEngine/assets/img/block.png"
+    })
+}
+
 console.log(MainGame.AllEntities)
 
 var Player1 = MainGame.NewPlayer({
