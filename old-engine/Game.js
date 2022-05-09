@@ -1,5 +1,5 @@
 export default class Game { //load map with parameters (div id, name, width, height, assets to load)
-    constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth, GameHeight }){
+    constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth = 800, GameHeight = 00}){
         console.log(GameWidth)
         this.Environment = document.querySelector(DivHtmlID)
         this.GameName = GameName

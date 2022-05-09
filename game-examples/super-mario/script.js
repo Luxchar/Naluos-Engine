@@ -1,6 +1,6 @@
-import Game from "../../engine/Game.js";
-import Player from "../../engine/Player.js";
-import Entity from "../../engine/Entity.js";
+import Game from "../../old-engine/Game.js";
+import Player from "../../old-engine/Player.js.js";
+import Entity from "../../old-engine/Entity.js.js";
 import PacmanMap from "./map.js";
 
 var MainGame = new Game({
