@@ -33,7 +33,7 @@ var Sky = MainGame.NewEntity({
 })
     
 var Grass = MainGame.NewEntity({
-    x:0,y:0,
+    x:-500,y:0,
     width:100,height:100,
     img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
 })
