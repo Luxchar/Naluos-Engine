@@ -22,27 +22,31 @@ export default class Player extends Entity{
     }
 
     AssignMovementEvent(input, movement, speed = 0.1) { //assign input to movement
-        document.addEventListener('keydown', (e) =>{
-            var obj = this.map.get(this.name)
-            this.#isButtonPressed(obj  , e, input, movement)
+        var obj = this.map.get(this.name)
+        document.addEventListener('keyup', (e) =>{
+            if (e.key == input && movement == "up" ) this.velocity.y = -15
+            if (e.key == input && movement == "down" ) this.velocity.y = 0
+            if (e.key == input && movement == "right") this.velocity.x = 0
+            if (e.key == input && movement == "left") this.velocity.x = 0
+            if (e.key == " " && movement == "jump") this.velocity.y -= 0
+        }, true);
 
-            if (this.isPressed.jump) this.velocity.y -= 15
+        document.addEventListener('keydown', (e) =>{
+            if (e.key == input && movement == "up" ) this.velocity.y = -15
+            if (e.key == input && movement == "down" ) this.velocity.y = 10
+            if (e.key == input && movement == "right") this.velocity.x = 10
+            if (e.key == input && movement == "left") this.velocity.x = -10
+            if (e.key == " " && movement == "jump") this.velocity.y -= 15
+
+            /*if (this.isPressed.jump) this.velocity.y -= 15
             if (this.isPressed.up) obj.y -= speed
             if (this.isPressed.down) obj.y += speed
             if (this.isPressed.right) obj.x += speed
-            if (this.isPressed.left) obj.x -= speed
+            if (this.isPressed.left) obj.x -= speed*/
 
-            this.map.set(obj.name, obj)
         }, true);
-    }
-    
 
-    #isButtonPressed(obj, e, input, movement){
-        if (e.key == input && movement == "up" ) this.isPressed.up = true, setTimeout(() => {this.isPressed.up = false}, 100)
-        if (e.key == input && movement == "down" ) this.isPressed.down = true, setTimeout(() => {this.isPressed.down = false}, 100)
-        if (e.key == input && movement == "right") this.isPressed.right = true, setTimeout(() => {this.isPressed.right = false}, 100)
-        if (e.key == input && movement == "left") this.isPressed.left = true, setTimeout(() => {this.isPressed.left = false}, 100)
-        if (e.key == " " && movement == "jump" && this.isPressed.jump == false) this.isPressed.jump = true, setTimeout(() => {this.isPressed.jump = false}, 500)
+        this.map.set(obj.name, obj)
     }
 
     setGravity({bool = true}){
@@ -50,6 +54,11 @@ export default class Player extends Entity{
             if (this.y + this.height + this.velocity.y <= this.Canvas.height-85 ) this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
             else this.velocity.y = 0
         }
+        this.map.set(this.name, this)
+    }
+
+    updateMouvement(){
+        this.x += this.velocity.x
         this.map.set(this.name, this)
     }
 

@@ -13,7 +13,7 @@ MainGame.Start()
 var Object = MainGame.NewEntity({
     name: "Objet",
     x: 50, y: 300,
-    width: 100, height: 100,
+    width: 60, height: 60,
     img: "./NaluosEngine/assets/img/block.png"
 })
 
@@ -50,7 +50,7 @@ MainGame.addSound({
 
 MainGame.playSoundOf({
     name: "ThemeSound",
-    volume: 0.2,
+    volume: 0.05,
 })
 
 console.log()
@@ -62,7 +62,9 @@ Player1.AssignMovementEvent("space", "jump", 40)
 function animate(){  
     requestAnimationFrame(animate)
     MainGame.ClearCanvas()
+    console.log(Player1.y)
     MainGame.Draw()
+    Player1.updateMouvement()
     MainGame.DrawMap(map, MapDefine)
     Player1.setGravity(true)
     Player1.setCollision(true)
