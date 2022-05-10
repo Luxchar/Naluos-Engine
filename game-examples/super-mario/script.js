@@ -51,18 +51,18 @@ Player1.AssignMovementEvent("d", "right", 5) //assign input to movement
 Player1.AssignMovementEvent("q", "left", 5)
 Player1.AssignMovementEvent(" ", "jump", 9)
 
-var Player2 = MainGame.NewPlayer({
-    name: "Léonator",
-    x: 50,
-    y: 10,
-    width: 100,
-    height: 100,
-    img: "../../NaluosEngine/assets/img/mario.jpg"
-})
+// var Player2 = MainGame.NewPlayer({
+//     name: "Léonator",
+//     x: 50,
+//     y: 10,
+//     width: 100,
+//     height: 100,
+//     img: "../../NaluosEngine/assets/img/mario.jpg"
+// })
 
-Player2.AssignMovementEvent("ArrowRight", "right", 5)
-Player2.AssignMovementEvent("ArrowLeft", "left", 5)
-Player2.AssignMovementEvent("ArrowUp", "jump", 9)
+// Player2.AssignMovementEvent("ArrowRight", "right", 5)
+// Player2.AssignMovementEvent("ArrowLeft", "left", 5)
+// Player2.AssignMovementEvent("ArrowUp", "jump", 9)
 
 var Sky = MainGame.NewEntity({ // import sky model
     x:0,y:0,
@@ -91,14 +91,18 @@ MainGame.playSoundOf({ // play sound
     volume: 0.05,
 })
 
+console.log(MainGame.AllEntities)
+
 function animate(){ // animate game
     requestAnimationFrame(animate)
     MainGame.ClearCanvas()
     MainGame.Draw()
-    Player1.updateMouvement(), Player2.updateMouvement()
+    Player1.updateMouvement()
+    //Player2.updateMouvement()
     MainGame.DrawMap(map, MapDefine)
+    Player1.setFocus()
     Player1.setGravity(true), Player1.setCollision(true)
-    Player2.setGravity(true), Player2.setCollision(true)
+    // Player2.setGravity(true), Player2.setCollision(true)
 }
 
 animate()

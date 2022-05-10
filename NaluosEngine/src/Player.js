@@ -10,7 +10,13 @@ export default class Player extends Entity{
             x: 0,
             y: 10,
         }
-        this.hasJumped = true
+        this.keys = {
+            hasJumped: false,
+            hasPressedRight: false,
+            hasPressedLeft: false,
+            hasPressedUp: false,
+            hasPressedDown: false,
+        }
     }
 
     get nameOfPlayer(){
@@ -26,20 +32,43 @@ export default class Player extends Entity{
         document.addEventListener('keyup', (e) =>{
             if (e.key == input && movement == "up" ) this.velocity.y = -15
             if (e.key == input && movement == "down" ) this.velocity.y = 0
-            if (e.key == input && movement == "right") this.velocity.x = 0
-            if (e.key == input && movement == "left") this.velocity.x = 0
-            if (e.key == " " && movement == "jump") this.velocity.y -= 0
+            if (e.key == input && movement == "right") this.velocity.x = 0, this.keys.hasPressedRight = false
+            if (e.key == input && movement == "left") this.velocity.x = 0, this.keys.hasPressedLeft = false
+            if (e.key == " " && movement == "jump") this.velocity.y -= 0, this.keys.hasJumped = false
         }, true);
 
         document.addEventListener('keydown', (e) =>{
             if (e.key == input && movement == "up" ) this.velocity.y = -1.5 * speed
             if (e.key == input && movement == "down" ) this.velocity.y = 1*speed
-            if (e.key == input && movement == "right") this.velocity.x = 1*speed
-            if (e.key == input && movement == "left") this.velocity.x = -1 * speed
-            if ((e.key == input || input == "Space") && movement == "jump") this.velocity.y -= 1.5 * speed
+            if (e.key == input && movement == "right") this.velocity.x = 1*speed, this.keys.hasPressedRight = true
+            if (e.key == input && movement == "left") this.velocity.x = -1 * speed, this.keys.hasPressedLeft = true
+            if ((e.key == input || input == "Space") && movement == "jump") this.velocity.y -= 1.5 * speed, this.keys.hasJumped = true
         }, true);
 
         this.map.set(obj.name, obj)
+    }
+
+    setFocus(){
+        if(this.x > 400 && this.keys.hasPressedRight){
+            this.map.forEach((e) => {
+                if(e.isEntity){
+                    e.x -= this.velocity.x
+                    this.map.set(e.name, e)
+                    this.x = 400
+                    this.map.set(this.name, this)
+                }
+            })
+        }
+        if(this.x < 200 && this.keys.hasPressedLeft){
+            this.map.forEach((e) => {
+                if(e.isEntity){
+                    e.x -= this.velocity.x
+                    this.x = 200
+                    this.map.set(e.name, e)
+                    this.map.set(this.name, this)
+                }
+            })
+        }
     }
 
     setGravity({bool = true}){
@@ -60,10 +89,9 @@ export default class Player extends Entity{
         if(bool){
             this.map.forEach(e => {
                 if(e.isEntity){
-                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = false 
+                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0
                 }
             });
-            console.log(this.hasJumped)
         }
     }
 }
