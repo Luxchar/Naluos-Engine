@@ -114,7 +114,7 @@ export default class Player extends Entity{
                 if(e.isEntity){
                     if(this.y + this.height >= e.y + e.height && this.y + this.height + this.velocity.y <= e.y + e.height && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.y = e.y+e.height,  this.hasJumped = true
                     if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = true
-                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = trued
+                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = true
                 }
             });
         }
