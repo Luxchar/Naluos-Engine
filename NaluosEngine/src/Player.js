@@ -10,7 +10,7 @@ export default class Player extends Entity{
             x: 0,
             y: 10,
         }
-        this.isPressed = {up:false, down:false, right:false, left:false, jump:false}
+        this.hasJumped = true
     }
 
     get nameOfPlayer(){
@@ -32,11 +32,11 @@ export default class Player extends Entity{
         }, true);
 
         document.addEventListener('keydown', (e) =>{
-            if (e.key == input && movement == "up" ) this.velocity.y = -15
-            if (e.key == input && movement == "down" ) this.velocity.y = 10
-            if (e.key == input && movement == "right") this.velocity.x = 10
-            if (e.key == input && movement == "left") this.velocity.x = -10
-            if (e.key == " " && movement == "jump") this.velocity.y -= 15
+            if (e.key == input && movement == "up" ) this.velocity.y = -1.5 * speed
+            if (e.key == input && movement == "down" ) this.velocity.y = 1*speed
+            if (e.key == input && movement == "right") this.velocity.x = 1*speed
+            if (e.key == input && movement == "left") this.velocity.x = -1 * speed
+            if ((e.key == input || input == "Space") && movement == "jump") this.velocity.y -= 1.5 * speed
         }, true);
 
         this.map.set(obj.name, obj)
@@ -44,12 +44,13 @@ export default class Player extends Entity{
 
     setGravity({bool = true}){
         if(bool){
-            if (this.y + this.height + this.velocity.y <= this.Canvas.height-85 ) this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
+            if (this.y + this.height + this.velocity.y <= this.Canvas.height-85) this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
             else this.velocity.y = 0
         }
         this.map.set(this.name, this)
     }
 
+    
     updateMouvement(){
         this.x += this.velocity.x
         this.map.set(this.name, this)
@@ -59,9 +60,10 @@ export default class Player extends Entity{
         if(bool){
             this.map.forEach(e => {
                 if(e.isEntity){
-                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0
+                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = false 
                 }
             });
+            console.log(this.hasJumped)
         }
     }
 }

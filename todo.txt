@@ -1,13 +1,11 @@
 game engine:
 
-Luc:
-sound system
-smoother movement
-responsive canvas size 
-multiplayer
-
-Léo:
+movement smoother ?
+double jump bug fix
+make map move forward and backward following the player movement
+responsive canvas size
 animation
+sound system (sound effects..)
 
 
 documentation:
@@ -16,6 +14,5 @@ html explain how the engine works
 
 
 game-examples:
-
-super mario
-pacman game
+build a level for super mario
+pacman game ?
