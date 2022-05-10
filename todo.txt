@@ -1,11 +1,7 @@
 game engine:
 
-movement smoother ?
-double jump bug fix
 responsive canvas size
 animation
-sound system (sound effects..)
-
 
 documentation:
 

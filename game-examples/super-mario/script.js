@@ -16,7 +16,7 @@ for (let index = 1; index <= 3; index++) {
         name: "Objet" + index,
         x: index*60, y: 300,
         width: 60, height: 60,
-        img: "../../NaluosEngine/assets/img/block.png"
+        img: "./assets/img/block.png"
     })
 }
 
@@ -25,7 +25,7 @@ for (let index = 7; index <= 11; index++) {
         name: "Objet" + index,
         x: index*60, y: 300,
         width: 60, height: 60,
-        img: "../../NaluosEngine/assets/img/block.png"
+        img: "./assets/img/block.png"
     })
 }
 
@@ -34,7 +34,7 @@ for (let index = 3; index <= 7; index++) {
         name: "Objet" + index+10,
         x: index*60, y: 100,
         width: 60, height: 60,
-        img: "../../NaluosEngine/assets/img/block.png"
+        img: "./assets/img/block.png"
     })
 }
 
@@ -42,14 +42,23 @@ var Player1 = MainGame.NewPlayer({ // create player
     name: "Nagibator",
     x: 250,
     y: 60,
-    width: 100,
-    height: 100,
-    img: "../../NaluosEngine/assets/img/mario.jpg"
+    width: 60,
+    height: 60,
+    img: "assets/img/mario.jpg"
 })
 
-Player1.AssignMovementEvent("d", "right", 5) //assign input to movement
-Player1.AssignMovementEvent("q", "left", 5)
-Player1.AssignMovementEvent(" ", "jump", 9)
+Player1.AssignMovementEvent({
+    input: "d", movement:"right", speed: 5, 
+    animationImagePath: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7",
+})
+
+Player1.AssignMovementEvent({
+    input: "q", movement: "left", speed: 5, 
+    animationImagePath: "./assets/img/block.png"})
+Player1.AssignMovementEvent({
+    input: " ", movement: "jump", speed: 9, 
+    animationImagePath: "./assets/img/mario.jpg", sound: {soundName: "JumpSound", volume: 0.2}
+})
 
 // var Player2 = MainGame.NewPlayer({
 //     name: "Léonator",
@@ -85,15 +94,21 @@ var MapDefine = new Map([ // define map properties
 
 MainGame.addSound({ // import sound
     name: "ThemeSound",
-    PathOrUrl: "../../NaluosEngine/assets/sounds/theme_music.mp3",
+    PathOrUrl: "assets/sounds/theme_music.mp3",
+})
+
+MainGame.addSound({ // import sound
+    name: "JumpSound",
+    PathOrUrl: "assets/sounds/jump.mp3",
 })
 
 MainGame.playSoundOf({ // play sound
     name: "ThemeSound",
-    volume: 0.05,
+    volume: 0.005
 })
 
-console.log(MainGame.AllEntities)
+
+console.log(Player1.sounds)
 
 function animate(){ // animate game
     requestAnimationFrame(animate)
@@ -107,7 +122,6 @@ function animate(){ // animate game
     Player1.setCollision(true)
     if(Player1.y >= MainGame.Canvas.height + 100){
         if(MainGame.Entities.get(Player1.name) === "undefined") Player1
-        else alert(Player1.name + " has died"), MainGame.Entities.delete(Player1.name)
         console.log(MainGame.Entities.get(Player1.name))
     }
     // Player2.setGravity(true), Player2.setCollision(true)

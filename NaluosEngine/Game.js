@@ -99,7 +99,7 @@ export default class Game{
         }
     }
 
-    Draw(){
+    Draw(){ 
         this.AllEntities.forEach(e => {
             this.Context.beginPath()
             if(e.isImage){
@@ -111,7 +111,7 @@ export default class Game{
         });
     }
 
-    #addPlayer({name,x,y, width, height, img}){
+    #addPlayer({name,x,y, width, height, img}){ // add player to the game
         return new Player({
             Canvas: this.Canvas,    
             Context: this.Context,
@@ -121,11 +121,12 @@ export default class Game{
             width,
             height,
             img,
-            map: this.Entities
+            map: this.Entities,
+            sounds: this.Sounds,
         })
     }
     
-    #addEntity({name,x,y, width, height, img}){
+    #addEntity({name,x,y, width, height, img}){ // add entity to the game
         return new Entity({
             Canvas: this.Canvas,    
             Context: this.Context,
@@ -134,7 +135,8 @@ export default class Game{
             name,
             width,
             height,
-            img
+            img,
+            sounds: this.Sounds
         })
     }
 }

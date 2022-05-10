@@ -1,5 +1,6 @@
 export default class Entity{ //load entity with parameters
-    constructor({Canvas, Context, name, x = 0, y = 0, width = 800, height = 600, img = "Rectangle"}) {
+    constructor({Canvas, Context, name, x = 0, y = 0, width = 800, height = 600, img = "Rectangle", sounds}) {
+        this.sounds = sounds
         this.InitEntityPosition(x, y);
         this.InnerEntitySize(width, height);
         this.InitEnvironment(Canvas, Context)

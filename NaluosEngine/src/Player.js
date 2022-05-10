@@ -1,8 +1,10 @@
 import Entity from './Entity.js';
 
 export default class Player extends Entity{
-    constructor({Canvas, Context, x, y, width, height, img, name, map}) {
+    constructor({Canvas, Context, x, y, width, height, img, name, map, sounds}) {
         super({Canvas, Context, x, y, width, height, img});
+        this.saveImg = img
+        this.sounds = sounds
         this.name = name || "Default Name"
         this.map = map
         this.velocity = {
@@ -11,7 +13,7 @@ export default class Player extends Entity{
             y: 10,
         }
         this.keys = {
-            hasJumped: true,
+            hasJumped: false,
             hasPressedRight: false,
             hasPressedLeft: false,
             hasPressedUp: false,
@@ -27,15 +29,35 @@ export default class Player extends Entity{
         return false
     }
 
-    AssignMovementEvent(input, movement, speed = 0.1) { //assign input to movement
+    AssignMovementEvent({input, movement, speed = 0.1, animationImagePath = this.img.currentSrc, sound =  {soundName : null, volume : 0.5}}) { //assign input to movement
         var obj = this.map.get(this.name)
-
+        console.log(input)
         document.addEventListener('keydown', (e) =>{
-            if (e.key == input && movement == "up" ) this.velocity.y = -1.5 * speed
-            if (e.key == input && movement == "down" ) this.velocity.y = 1*speed
-            if (e.key == input && movement == "right") this.velocity.x = 1*speed, this.keys.hasPressedRight = true
-            if (e.key == input && movement == "left") this.velocity.x = -1 * speed, this.keys.hasPressedLeft = true
-            if ((e.key == input || input == "Space" ) && movement == "jump") this.velocity.y -= 1.5 * speed 
+            if (e.key == input && movement == "up" ){ 
+                this.velocity.y = -1.5 * speed, this.img = this.SetImgSprite(animationImagePath)
+            }
+            if (e.key == input && movement == "down" ){ 
+                this.velocity.y = 1*speed, this.img = this.SetImgSprite(animationImagePath)
+            }
+            if (e.key == input && movement == "right"){ 
+                this.velocity.x = 1*speed, this.keys.hasPressedRight = true, this.img = this.SetImgSprite(animationImagePath)
+            }
+            if (e.key == input && movement == "left"){ 
+                this.velocity.x = -1 * speed, this.keys.hasPressedLeft = true, this.img = this.SetImgSprite(animationImagePath)
+            }
+            if (e.key == input && this.hasJumped && movement == "jump"){ 
+                this.velocity.y -= 1.8 * speed, this.hasJumped = false
+                this.img = this.SetImgSprite(animationImagePath)
+                if(sound.soundName != null) {
+                    var aud =  this.sounds.get(sound.soundName)
+                    aud.volume = sound.volume
+                    aud.play()
+                   
+                }
+            }
+            if(this.velocity.x == 0 && this.velocity.y == 0){ 
+                this.img = this.SetImgSprite(this.saveImg)
+            }
         }, true);
 
         document.addEventListener('keyup', (e) =>{
@@ -44,6 +66,7 @@ export default class Player extends Entity{
             if (e.key == input && movement == "right") this.velocity.x = 0, this.keys.hasPressedRight = false
             if (e.key == input && movement == "left") this.velocity.x = 0, this.keys.hasPressedLeft = false
             if (e.key == " " && movement == "jump") this.velocity.y -= 0
+            if(this.velocity.x == 0 && this.velocity.y == 0) this.img = this.SetImgSprite(this.saveImg)
         }, true);
 
         this.map.set(obj.name, obj)
@@ -90,7 +113,7 @@ export default class Player extends Entity{
         if(bool){
             this.map.forEach(e => {
                 if(e.isEntity){
-                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0
+                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = true
                 }
             });
         }
