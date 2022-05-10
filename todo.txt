@@ -2,7 +2,6 @@ game engine:
 
 movement smoother ?
 double jump bug fix
-make map move forward and backward following the player movement
 responsive canvas size
 animation
 sound system (sound effects..)

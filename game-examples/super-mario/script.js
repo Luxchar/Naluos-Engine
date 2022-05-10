@@ -69,16 +69,18 @@ var Sky = MainGame.NewEntity({ // import sky model
     width:100,height:100, 
     img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
 })
-    
-var Grass = MainGame.NewEntity({
-    x:-500,y:0,
-    width:100,height:100,
-    img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
-})
+
+for (let i = 0; i <= 100; i++) {
+    MainGame.NewEntity({
+        name: i*100,
+        x: i*100,y:MainGame.Canvas.height-100,
+        width:100,height:100,
+        img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
+    }) 
+}
 
 var MapDefine = new Map([ // define map properties
     [0, Sky], 
-    [1, Grass]
 ]) //define map properties
 
 MainGame.addSound({ // import sound
@@ -101,7 +103,13 @@ function animate(){ // animate game
     //Player2.updateMouvement()
     MainGame.DrawMap(map, MapDefine)
     Player1.setFocus()
-    Player1.setGravity(true), Player1.setCollision(true)
+    Player1.setGravity(true)
+    Player1.setCollision(true)
+    if(Player1.y >= MainGame.Canvas.height + 100){
+        if(MainGame.Entities.get(Player1.name) === "undefined") Player1
+        else alert(Player1.name + " has died"), MainGame.Entities.delete(Player1.name)
+        console.log(MainGame.Entities.get(Player1.name))
+    }
     // Player2.setGravity(true), Player2.setCollision(true)
 }
 
