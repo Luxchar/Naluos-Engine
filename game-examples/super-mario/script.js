@@ -57,7 +57,7 @@ Player1.AssignMovementEvent({
     animationImagePath: "./assets/img/block.png"})
 Player1.AssignMovementEvent({
     input: " ", movement: "jump", speed: 9, 
-    animationImagePath: "./assets/img/mario.jpg", sound: {soundName: "JumpSound", volume: 0.2}
+    animationImagePath: "./assets/img/mario.jpg",
 })
 
 // var Player2 = MainGame.NewPlayer({
@@ -79,17 +79,26 @@ var Sky = MainGame.NewEntity({ // import sky model
     img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
 })
 
-for (let i = 0; i <= 100; i++) {
-    MainGame.NewEntity({
-        name: i*100,
-        x: i*100,y:MainGame.Canvas.height-100,
-        width:100,height:100,
-        img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
-    }) 
+var Grass = MainGame.NewEntity({
+    x: 0, y: MainGame.Canvas.height + 100,
+    width: 100, height: 100,
+    img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7",
+})
+
+for (let i = 0; i <= 15; i++) {
+    if((i >= 0 && i <= 3) || (i >= 5 && i<= 8) || (i >= 11 && i <= 15)){
+        MainGame.NewEntity({
+            name: i*100,
+            x: i*100,y:MainGame.Canvas.height-100,
+            width:100,height:100,
+            img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
+        }) 
+    } 
 }
 
 var MapDefine = new Map([ // define map properties
     [0, Sky], 
+    [1, Grass]
 ]) //define map properties
 
 MainGame.addSound({ // import sound
@@ -111,7 +120,7 @@ MainGame.playSoundOf({ // play sound
 console.log(Player1.sounds)
 
 function animate(){ // animate game
-    requestAnimationFrame(animate)
+    var handleGame = window.requestAnimationFrame(animate)
     MainGame.ClearCanvas()
     MainGame.Draw()
     Player1.updateMouvement()
@@ -121,10 +130,16 @@ function animate(){ // animate game
     Player1.setGravity(true)
     Player1.setCollision(true)
     if(Player1.y >= MainGame.Canvas.height + 100){
-        if(MainGame.Entities.get(Player1.name) === "undefined") Player1
-        console.log(MainGame.Entities.get(Player1.name))
+        alert("T'es une merde")
+        stopAnimate(handleGame)
+        if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name)
     }
-    // Player2.setGravity(true), Player2.setCollision(true)
 }
+
+function stopAnimate(h){
+    window.cancelAnimationFrame(h)
+}
+
+console.log(MainGame.AllEntities)
 
 animate()
