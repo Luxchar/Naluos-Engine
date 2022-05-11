@@ -44,7 +44,7 @@ var Player1 = MainGame.NewPlayer({ // create player
     y: 60,
     width: 60,
     height: 60,
-    img: "assets/img/mario.jpg"
+    img: "assets/img/mario-movement.png",
 })
 
 Player1.AssignMovementEvent({

@@ -1,7 +1,7 @@
 import Entity from './Entity.js';
 
 export default class Player extends Entity{
-    constructor({Canvas, Context, x, y, width, height, img, name, map, sounds}) {
+    constructor({Canvas, Context, x, y, width, height, img, name, map, sounds, tilex, tiley}) {
         super({Canvas, Context, x, y, width, height, img});
         this.saveImg = img
         this.sounds = sounds
@@ -19,6 +19,8 @@ export default class Player extends Entity{
             hasPressedUp: false,
             hasPressedDown: false,
         }
+        this.tilex = tilex
+        this.tiley = tiley
     }
 
     get nameOfPlayer(){
@@ -108,13 +110,23 @@ export default class Player extends Entity{
         this.map.set(this.name, this)
     }
 
-    setCollision({bool = true}){
+    setCollision({bool = true, position = { top : { break : true, collision : true }, buttom : { break: false, collision: true }} }){
         if(bool){
             this.map.forEach(e => {
                 if(e.isEntity){
-                    if(this.y + this.height >= e.y + e.height && this.y + this.height + this.velocity.y <= e.y + e.height && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.y = e.y+e.height,  this.hasJumped = true
-                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = true
-                    if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) this.velocity.y = 0, this.hasJumped = true
+                    if(position.top.collision){
+                        if(this.y + this.height >= e.y + e.height && this.y + this.height + this.velocity.y <= e.y + e.height && this.x + this.width >= e.x && this.x <= e.x + e.width){
+                            this.velocity.y = 0, this.y = e.y+e.height,  this.hasJumped = true
+                            if(position.top.break) this.map.delete(e.name)
+                        }     
+                    }
+                    if(position.buttom.collision){
+                        if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) {
+                            this.velocity.y = 0, this.hasJumped = true
+                            if(position.buttom.break) this.map.delete(e.name)
+                        }
+                    }
+                   
                 }
             });
         }
