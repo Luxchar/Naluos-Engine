@@ -29,6 +29,12 @@ export default class Entity{ //load entity with parameters
         return img
     }
 
+    DrawSprite(img){ 
+            this.Context.beginPath()
+            this.Context.drawImage(img, 50,50, this.width, this.height,this.x, this.y,this.width, this.height)
+            this.Context.fill()
+        };
+
     get nameOfEntity(){
         return this.name
     }

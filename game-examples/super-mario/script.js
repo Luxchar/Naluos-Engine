@@ -20,24 +20,6 @@ for (let index = 1; index <= 3; index++) {
     })
 }
 
-// for (let index = 7; index <= 11; index++) {
-//     MainGame.NewEntity({
-//         name: "Objet" + index,
-//         x: index*60, y: 0.7*MainGame.Canvas.height,
-//         width: 60, height: 60,
-//         img: "./assets/img/block.png"
-//     })
-// }
-
-// for (let index = 3; index <= 7; index++) {
-//     MainGame.NewEntity({
-//         name: "Objet" + index+10,
-//         x: index*60, y: 0.2*MainGame.Canvas.height,
-//         width: 60, height: 60,
-//         img: "./assets/img/block.png"
-//     })
-// }
-
 var Player1 = MainGame.NewPlayer({ // create player
     name: "Nagibator",
     x: 250,
@@ -56,22 +38,9 @@ Player1.AssignMovementEvent({
     input: "q", movement: "left", speed: 6, 
     animationImagePath: "./assets/img/block.png"})
 Player1.AssignMovementEvent({
-    input: " ", movement: "jump", speed: 8, 
+    input: " ", movement: "jump", speed: 15, 
     animationImagePath: "./assets/img/mario.jpg",
 })
-
-// var Player2 = MainGame.NewPlayer({
-//     name: "Léonator",
-//     x: 50,
-//     y: 10,
-//     width: 100,
-//     height: 100,
-//     img: "../../NaluosEngine/assets/img/mario.jpg"
-// })
-
-// Player2.AssignMovementEvent("ArrowRight", "right", 5)
-// Player2.AssignMovementEvent("ArrowLeft", "left", 5)
-// Player2.AssignMovementEvent("ArrowUp", "jump", 9)
 
 var Sky = MainGame.NewEntity({ // import sky model
     x:0,y:0,
@@ -113,7 +82,7 @@ MainGame.addSound({ // import sound
 
 MainGame.playSoundOf({ // play sound
     name: "ThemeSound",
-    volume: 0.005
+    volume: 0.0005
 })
 
 function animate(){ // animate game

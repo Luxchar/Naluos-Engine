@@ -8,6 +8,3 @@ html explain how the engine works
 
 game-examples:
 build a level for super mario 
--(bug double jump when jumping below block considered as ground, 
-- holding right or left after jumping doesnt update animation)
-pacman game ?
