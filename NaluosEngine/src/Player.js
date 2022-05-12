@@ -124,21 +124,18 @@ export default class Player extends Entity{
                             this.velocity.y = 0, this.hasJumped = true
                         }
                     }
-                    if(position.right.collision){ // collision with right side of the entity
-                        if(this.x >= e.x && this.x - this.velocity.x*2 <= e.x && this.y + this.height >= e.y && this.y <= e.y + e.height){
-                            this.velocity.x = 0, this.velocity.y = 0
+                    if(position.left.collision){ // collision with right side of the entity
+                        console.log(this.x, this.velocity.x, e.x)
+                        if(this.x >= e.x-50 && this.x - this.velocity.x <= e.x && this.y + this.height >= e.y && this.y <= e.y + e.height){
+                            this.velocity.x = -1 , this.velocity.y = 0
                             this.x = e.x - this.width
-                            this.map.set(this.name, this)
-                            console.log("collision with left side of the entity")
-
                         }
                     }
 
-                    if(position.left.collision){ // collision with left side of the entity
-                        if(this.x <= e.x + e.width && this.x + this.velocity.x*2 >= e.x + e.width && this.y + this.height >= e.y && this.y <= e.y + e.height){
-                            console.log("collision with right side of the entity")
-                            this.velocity.x = 0, this.x = e.x+e.width
-                            this.map.set(this.name, this)
+                    if(position.right.collision){ // collision with left side of the entity
+                        if(this.x + this.width <= e.x + e.width + 50 && this.x + this.width + this.velocity.x >= e.x + e.width && this.y + this.height >= e.y && this.y <= e.y + e.height){
+                            this.velocity.x = 1 , this.velocity.y = 0
+                            this.x = e.x + e.width
                         }
                     }
                 }
