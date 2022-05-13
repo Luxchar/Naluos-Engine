@@ -23,6 +23,13 @@ export default class Game{
         return this.Entities
     }
 
+    DeleteAllEntities(){
+        return this.Entities.clear()
+    }
+
+    DeleteAllPlayers(){
+        return this.Players.clear()
+    }
 
     Start(){
         this.Environment.appendChild(this.Canvas)
@@ -64,9 +71,9 @@ export default class Game{
         })
     }
 
-    NewPlayer({name, x, y, width, height, img}) {
+    NewPlayer({name, x, y, width, height, img, imgId}) {
         var p = this.#addPlayer({
-            name, x, y, width, height, img
+            name, x, y, width, height, img, imgId
         })
         this.AllPlayers.set(p.nameOfPlayer, p)
         this.Entities.set(p.nameOfPlayer, p)
@@ -111,7 +118,7 @@ export default class Game{
         });
     }
 
-    #addPlayer({name,x,y, width, height, img}){ // add player to the game
+    #addPlayer({name,x,y, width, height, img, imgId}){ // add player to the game
         return new Player({
             Canvas: this.Canvas,    
             Context: this.Context,
@@ -123,6 +130,7 @@ export default class Game{
             img,
             map: this.Entities,
             sounds: this.Sounds,
+            imgId: imgId
         })
     }
     

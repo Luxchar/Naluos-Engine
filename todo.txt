@@ -2,9 +2,14 @@ game engine:
 animation tileset
 
 documentation:
-
+landing page (choose level (bam bird or super mario))
 html explain how the engine works
 
 
 game-examples:
 build a level for super mario 
+flappy bird
+
+- faire api go (store scoreboard in db (mongodb ?))
+- ajouter du lore dans mario
+- faire plusieurs niveaux mario
