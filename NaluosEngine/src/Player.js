@@ -120,16 +120,17 @@ export default class Player extends Entity{
                         }
                     }
                     if(position.left.collision){ // collision with right side of the entity
-                        console.log(this.x, this.velocity.x, e.x)
                         if(this.x + this.velocity.x >= e.x-this.width && this.x - this.velocity.x <= e.x && this.y + this.height >= e.y && this.y <= e.y + e.height){
                             this.velocity.x = -1
                             this.x = e.x - this.width
+                            position.top.collision = false
                         }
                     }
                     if(position.right.collision){ // collision with left side of the entity
                         if(this.x + this.width <= e.x + e.width + this.width - this.velocity.x && this.x + this.width + this.velocity.x >= e.x + e.width && this.y + this.height >= e.y && this.y <= e.y + e.height){
                             this.velocity.x = 1
                             this.x = e.x + e.width
+                            position.top.collision = false
                         }
                     }
                 }
