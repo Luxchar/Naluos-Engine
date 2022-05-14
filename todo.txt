@@ -8,8 +8,10 @@ html explain how the engine works
 
 game-examples:
 build a level for super mario 
-flappy bird
-
+- pause menu 
+- collision bug
 - faire api go (store scoreboard in db (mongodb ?))
 - ajouter du lore dans mario
 - faire plusieurs niveaux mario
+
+flappy bird

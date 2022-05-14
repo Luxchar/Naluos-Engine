@@ -89,32 +89,41 @@ function stopAnimate(h){
 //ENTITIES DEFINING
 
 for (let index = 1; index <= 3; index++) {
-    MainGame.NewEntity({
-        name: "Objet" + index,
-        x: index*60, y: MainGame.Canvas.height - 300,
-        width: 60, height: 60,
-        img: "./assets/img/block.png"
-    })
+    if (index == 2){
+        MainGame.NewEntity({
+            name: "Objet" + index,
+            x: 100+index*60, y: MainGame.Canvas.height - 300,
+            width: 60, height: 60,
+            img: "./assets/img/block_interrogation_mark.jpg",
+        })
+    } else {    
+        MainGame.NewEntity({
+            name: "Objet" + index,
+            x: 100+index*60, y: MainGame.Canvas.height - 300,
+            width: 60, height: 60,
+            img: "./assets/img/block.png"
+        })
+    }
 }
 
-for (let i = 0; i <= 150; i++) {
-    if((i >= 0 && i <= 3) || (i >= 5 && i<= 8) || (i >= 11 && i <= 15) || (i >= 16 && i <= 50)){
+for (let i = 0; i <= 150; i++) { //ground
+    if((i >= 0 && i <= 12) || (i >= 18 && i <= 15) || (i >= 16 && i <= 50)){
         MainGame.NewEntity({
-            name: i*100,
-            x: i*100,y:MainGame.Canvas.height-100,
-            width:100,height:100,
+            name: i*60,
+            x: i*60,y:MainGame.Canvas.height-60,
+            width:60,height:60,
             img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
         }) 
     } 
 }
 
-// for (let i = 0; i <= 20; i++) {
-//         MainGame.NewEntity({
-//             name: i*100,
-//             x: 0,y:MainGame.Canvas.height*(i*100),
-//             width:100,height:100,
-//             img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
-//         })}
+for (let i = 1; i <= 20; i++) { //wall start
+        MainGame.NewEntity({
+            name: 'block'+i,
+            x: 0,y:MainGame.Canvas.height-(60*i),
+            width:60,height:60,
+            img: "./assets/img/block.png" 
+        })}
 
 
 animate()
