@@ -65,21 +65,37 @@ MainGame.playSoundOf({ // play sound
     volume: 0.0005
 })
 
-function animate(){ // animate game
-    var handleGame = window.requestAnimationFrame(animate)
-    MainGame.ClearCanvas()
-    MainGame.Draw()
-    Player1.updateMouvement()
-    //Player2.updateMouvement()
-    MainGame.DrawMap(map, MapDefine)
-    Player1.setFocus()
-    Player1.setGravity(true)
-    Player1.setCollision(true)
-    if(Player1.y >= MainGame.Canvas.height + 100){
-        alert("T'es une merde")
-        stopAnimate(handleGame)
-        if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name)
+var isRunning = true 
+document.addEventListener('keydown', function(event){ //pause game
+    if(event.key === "Escape"){
+        if (isRunning) {
+            isRunning = false
+        } else {
+            isRunning = true
+            animate()
+        }
     }
+});
+function animate(){ // animate game
+    if (isRunning) {
+        var handleGame = window.requestAnimationFrame(animate)
+        MainGame.ClearCanvas()
+        MainGame.Draw()
+        Player1.updateMouvement()
+        //Player2.updateMouvement()
+        MainGame.DrawMap(map, MapDefine)
+        Player1.setFocus()
+        Player1.setGravity(true)
+        Player1.setCollision(true)
+        if(Player1.y >= MainGame.Canvas.height + 100){
+            alert("T'es une merde")
+            stopAnimate(handleGame)
+            if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name)
+        }
+    } else {
+        console.log('paused game menu')
+    }
+
 }
 
 function stopAnimate(h){
@@ -127,4 +143,3 @@ for (let i = 1; i <= 20; i++) { //wall start
 
 
 animate()
-

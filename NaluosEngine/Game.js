@@ -13,6 +13,7 @@ export default class Game{
         this.Players = new Map()
         this.Objects = new Map()
         this.Sounds = new Map()
+        this.isRunning = false
     }
 
     get AllPlayers(){
@@ -66,8 +67,7 @@ export default class Game{
     
     async playSound(name) {
         document.body.addEventListener("mousemove", function () {
-            var a = this.Sounds.get(name)
-            return a
+            return this.Sounds.get(name)
         })
     }
 

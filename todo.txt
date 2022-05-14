@@ -10,7 +10,7 @@ game-examples:
 build a level for super mario 
 - pause menu
 - faire api go (store scoreboard in db (mongodb ?))
-- ajouter du lore dans mario (princesse a sauver..)
+- ajouter du lore dans mario (princesse a sauver..-)
 - faire plusieurs niveaux mario
 
 flappy bird
