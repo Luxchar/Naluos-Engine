@@ -14,6 +14,7 @@ export default class Game{
         this.Objects = new Map()
         this.Sounds = new Map()
         this.isRunning = false
+        this.frames = 1
     }
 
     get AllPlayers(){
@@ -71,18 +72,18 @@ export default class Game{
         })
     }
 
-    NewPlayer({name, x, y, width, height, img, imgId}) {
+    NewPlayer({name, x, y, width, height, img, sprite}) {
         var p = this.#addPlayer({
-            name, x, y, width, height, img, imgId
+            name, x, y, width, height, img, sprite
         })
         this.AllPlayers.set(p.nameOfPlayer, p)
         this.Entities.set(p.nameOfPlayer, p)
         return p
     }
 
-    NewEntity({name, x, y, width, height, img}){
+    NewEntity({name, x, y, width, height, img, sprite}){
         var ent = this.#addEntity({
-            name, x, y, width, height, img
+            name, x, y, width, height, img, sprite
         })
         this.Entities.set(ent.nameOfEntity, ent)
         this.Objects.set(ent.nameOfEntity, ent)
@@ -109,8 +110,14 @@ export default class Game{
     Draw(){ 
         this.AllEntities.forEach(e => {
             this.Context.beginPath()
-            if(e.isImage){
+            if(e.isImage && !e.hasSprite){
                 this.Context.drawImage(e.img, e.x, e.y, e.width, e.height)
+            } else if (e.isImage && e.hasSprite){
+                if(this.frames >= 5  ) this.frames = 0
+                this.Context.drawImage(e.img,10+100*this.frames,0,100,150, e.x, e.y, e.width, e.height)
+                var previous = this.frames
+                this.frames++
+                console.log(this.frames)
             } else {
                 this.Context.rect(e.x, e.y, e.width, e.height)
             }
@@ -118,7 +125,7 @@ export default class Game{
         });
     }
 
-    #addPlayer({name,x,y, width, height, img, imgId}){ // add player to the game
+    #addPlayer({name,x,y, width, height, img, sprite}){ // add player to the game
         return new Player({
             Canvas: this.Canvas,    
             Context: this.Context,
@@ -130,11 +137,11 @@ export default class Game{
             img,
             map: this.Entities,
             sounds: this.Sounds,
-            imgId: imgId
+            sprite: sprite,
         })
     }
     
-    #addEntity({name,x,y, width, height, img}){ // add entity to the game
+    #addEntity({name,x,y, width, height, img, sprite}){ // add entity to the game
         return new Entity({
             Canvas: this.Canvas,    
             Context: this.Context,

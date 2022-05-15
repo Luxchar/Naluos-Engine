@@ -1,8 +1,8 @@
 import Entity from './Entity.js';
 
 export default class Player extends Entity{
-    constructor({Canvas, Context, x, y, width, height, img, name, map, sounds}) {
-        super({Canvas, Context, x, y, width, height, img});
+    constructor({Canvas, Context, x, y, width, height, img, name, map, sounds, sprite = null}) {
+        super({Canvas, Context, x, y, width, height, img, sprite});
         this.saveImg = img
         this.sounds = sounds
         this.name = name || "Default Name"

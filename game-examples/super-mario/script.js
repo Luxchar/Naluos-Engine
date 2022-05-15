@@ -17,8 +17,10 @@ var Player1 = MainGame.NewPlayer({ // create player
     width: 60,
     height: 60,
     img: "assets/img/mario-movement.png",
-    imgId: "mario-movement"
+    sprite: "ok"
 })
+
+console.log(Player1.hasSprite)
 
 Player1.AssignMovementEvent({
     input: "d", movement:"right", speed: 6, 
@@ -32,6 +34,7 @@ Player1.AssignMovementEvent({
     input: " ", movement: "jump", speed: 15, 
     animationImagePath: "./assets/img/mario.jpg",
 })
+
 
 var Sky = MainGame.NewEntity({ // import sky model
     x:0,y:0,
