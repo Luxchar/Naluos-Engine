@@ -15,6 +15,7 @@ export default class Game{
         this.Sounds = new Map()
         this.isRunning = false
         this.frames = 1
+        this.countframes = 0 // speed of the sprite frame
     }
 
     get AllPlayers(){
@@ -108,16 +109,19 @@ export default class Game{
     }
 
     Draw(){ 
+        this.countframes++
         this.AllEntities.forEach(e => {
             this.Context.beginPath()
             if(e.isImage && !e.hasSprite){
                 this.Context.drawImage(e.img, e.x, e.y, e.width, e.height)
-            } else if (e.isImage && e.hasSprite){
-                if(this.frames >= 5  ) this.frames = 0
-                this.Context.drawImage(e.img,10+100*this.frames,0,100,150, e.x, e.y, e.width, e.height)
-                var previous = this.frames
+            } else if (e.isImage && e.hasSprite && this.countframes == 10) { //change speed of the animation with this.countframes
+                if(this.frames == 2) this.frames = 0
+                console.log(e.framesAnimation, e.speedanimation )
+                this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height) 
                 this.frames++
-                console.log(this.frames)
+                this.countframes = 0
+            } else if (e.isImage && e.hasSprite) {
+                this.Context.drawImage(e.img,(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height)
             } else {
                 this.Context.rect(e.x, e.y, e.width, e.height)
             }

@@ -5,7 +5,7 @@ var MainGame = new Game({ //create game
     DivHtmlID: "#game-container",
     GameName: "MainGame",
     GameWidth: window.innerWidth-10,
-    GameHeight: window.innerHeight-40
+    GameHeight: window.innerHeight-25
 })
 
 MainGame.Start()
@@ -20,11 +20,10 @@ var Player1 = MainGame.NewPlayer({ // create player
     sprite: "ok"
 })
 
-console.log(Player1.hasSprite)
-
 Player1.AssignMovementEvent({
     input: "d", movement:"right", speed: 6, 
-    animationImagePath: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7",
+    animationImagePath: "assets/img/mario-movement.png"
+    // ,frames: [0,1],speedAnimation: 5
 })
 
 Player1.AssignMovementEvent({
@@ -32,7 +31,7 @@ Player1.AssignMovementEvent({
     animationImagePath: "./assets/img/block.png"})
 Player1.AssignMovementEvent({
     input: " ", movement: "jump", speed: 15, 
-    animationImagePath: "./assets/img/mario.jpg",
+    animationImagePath: "./assets/img/mario.jpg"
 })
 
 
@@ -42,15 +41,8 @@ var Sky = MainGame.NewEntity({ // import sky model
     img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
 })
 
-var Grass = MainGame.NewEntity({
-    x: 0, y: MainGame.Canvas.height + 100,
-    width: 60, height: 60,
-    img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7",
-})
-
 var MapDefine = new Map([ // define map properties
-    [0, Sky], 
-    [1, Grass]
+    [0, Sky]
 ]) //define map properties
 
 MainGame.addSound({ // import sound
@@ -82,10 +74,11 @@ document.addEventListener('keydown', function(event){ //pause game
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
-        MainGame.ClearCanvas()
-        MainGame.Draw()
+        MainGame.ClearCanvas() // clear canvas to show next frame
+        MainGame.Draw() // draw sprites of the entities
+
+
         Player1.updateMouvement()
-        //Player2.updateMouvement()
         MainGame.DrawMap(map, MapDefine)
         Player1.setFocus()
         Player1.setGravity(true)
@@ -111,29 +104,31 @@ for (let index = 1; index <= 3; index++) {
     if (index == 2){
         MainGame.NewEntity({
             name: "Objet" + index,
-            x: 100+index*60, y: MainGame.Canvas.height - 300,
+            x: 1600+index*60, y: MainGame.Canvas.height - 300,
             width: 60, height: 60,
             img: "./assets/img/block_interrogation_mark.jpg",
         })
     } else {    
         MainGame.NewEntity({
             name: "Objet" + index,
-            x: 100+index*60, y: MainGame.Canvas.height - 300,
+            x: 1600+index*60, y: MainGame.Canvas.height - 300,
             width: 60, height: 60,
             img: "./assets/img/block.png"
         })
     }
 }
 
-for (let i = 0; i <= 150; i++) { //ground
-    if((i >= 0 && i <= 12) || (i >= 18 && i <= 15) || (i >= 16 && i <= 50)){
+for (let i = 0; i <= 125; i++) { //ground
+    if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) ){
+
+    } else {
         MainGame.NewEntity({
             name: i*60,
             x: i*60,y:MainGame.Canvas.height-60,
             width:60,height:60,
             img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
         }) 
-    } 
+    }
 }
 
 for (let i = 1; i <= 20; i++) { //wall start
@@ -141,7 +136,7 @@ for (let i = 1; i <= 20; i++) { //wall start
             name: 'block'+i,
             x: 0,y:MainGame.Canvas.height-(60*i),
             width:60,height:60,
-            img: "./assets/img/block.png" 
+            img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
         })}
 
 

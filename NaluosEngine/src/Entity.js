@@ -26,17 +26,11 @@ export default class Entity{ //load entity with parameters
         this.Context = context
     }
 
-    SetImgSprite(imgPath) { //set sprite img
+    SetImgSprite(imgPath) { //set sprite img        
         var img = document.createElement('img');
         img.src = imgPath
         return img
     }
-
-    DrawSprite(img){ 
-            this.Context.beginPath()
-            this.Context.drawImage(img, 50,50, this.width, this.height,this.x, this.y,this.width, this.height)
-            this.Context.fill()
-        };
 
     get nameOfEntity(){
         return this.name
