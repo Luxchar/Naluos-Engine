@@ -46,9 +46,9 @@ export default class Player extends Entity{
             }
             if (e.key == input && this.hasJumped && movement == "jump"){ 
                 this.velocity.y -= 1 * speed, this.hasJumped = false
-                if (this.keys.hasPressedRight) this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)
-                else this.img = this.SetImgSprite(animationImagePathReversed, frames, speedAnimation, movement)
-                
+                if(this.keys.hasPressedLeft) this.img = this.SetImgSprite(animationImagePathReversed, frames, speedAnimation, movement)
+                else this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement), console.log("left")   
+
                 if(sound.soundName != null) {
                     var aud =  this.sounds.get(sound.soundName)
                     aud.volume = sound.volume
