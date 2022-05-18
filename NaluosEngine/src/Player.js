@@ -3,7 +3,6 @@ import Entity from './Entity.js';
 export default class Player extends Entity{
     constructor({Canvas, Context, x, y, width, height, img, name, map, sounds, sprite = null}) {
         super({Canvas, Context, x, y, width, height, img, sprite});
-        this.saveImg = img
         this.sounds = sounds
         this.name = name || "Default Name"
         this.map = map
@@ -65,7 +64,6 @@ export default class Player extends Entity{
             if (e.key == input && movement == "right") this.velocity.x = 0, this.keys.hasPressedRight = false, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
             if (e.key == input && movement == "left") this.velocity.x = 0, this.keys.hasPressedLeft = false, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
             if (e.key == " " && movement == "jump") this.velocity.y -= 0, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
-            // this.img = this.SetImgSprite(this.saveImg)
         }, true);
 
         this.map.set(obj.name, obj)
