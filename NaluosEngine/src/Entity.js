@@ -6,6 +6,7 @@ export default class Entity{ //load entity with parameters
         this.InitEnvironment(Canvas, Context)
         this.sprite = sprite
         this.name = name || "Default Entity"
+        this.animations = new Map()
         if(img === "Rectangle") this.img = img
         else this.img = this.SetImgSprite(img)
         if (this.sprite != null) this.hasSprite = true
@@ -26,7 +27,9 @@ export default class Entity{ //load entity with parameters
         this.Context = context
     }
 
-    SetImgSprite(imgPath) { //set sprite img        
+    SetImgSprite(imgPath, framesAnimation, speedAnimation, direction) { //set sprite img
+        this.animations.set(direction, framesAnimation, speedAnimation)
+
         var img = document.createElement('img');
         img.src = imgPath
         return img

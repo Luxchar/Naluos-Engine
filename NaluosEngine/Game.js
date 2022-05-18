@@ -16,6 +16,7 @@ export default class Game{
         this.isRunning = false
         this.frames = 1
         this.countframes = 0 // speed of the sprite frame
+        this.direction = ["right", "left", "up", "down"]
     }
 
     get AllPlayers(){
@@ -108,20 +109,28 @@ export default class Game{
         }
     }
 
-    Draw(){ 
+    Draw(){
         this.countframes++
         this.AllEntities.forEach(e => {
             this.Context.beginPath()
-            if(e.isImage && !e.hasSprite){
+            if(e.isImage && !e.hasSprite){ // if the entity has an image
                 this.Context.drawImage(e.img, e.x, e.y, e.width, e.height)
-            } else if (e.isImage && e.hasSprite && this.countframes == 10) { //change speed of the animation with this.countframes
-                if(this.frames == 2) this.frames = 0
-                console.log(e.framesAnimation, e.speedanimation )
-                this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height) 
-                this.frames++
-                this.countframes = 0
-            } else if (e.isImage && e.hasSprite) {
-                this.Context.drawImage(e.img,(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height)
+            } else if (e.isImage && e.hasSprite) { // if the entity has an image and a sprite
+                if(this.frames == 2) this.frames = 0 // reset the frames
+                if (this.countframes == 8) this.countframes = 0, this.frames++ // speed of the sprite frame
+                // draw the sprite
+                
+                if (e.animations.get("jump") != undefined && e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("jump") != undefined && e.animations.get("left") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("jump") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("left") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("up") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("down") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
+                } else this.Context.drawImage(e.img,(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
+
+
+
             } else {
                 this.Context.rect(e.x, e.y, e.width, e.height)
             }

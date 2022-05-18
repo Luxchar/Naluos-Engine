@@ -30,24 +30,24 @@ export default class Player extends Entity{
         return false
     }
 
-    AssignMovementEvent({input, movement, speed = 0.1, animationImagePath = this.img.currentSrc, sound =  {soundName : null, volume : 0.5}},frames ,speedAnimation) { //assign input to movement
+    AssignMovementEvent({input, movement, speed = 0.1, animationImagePath = this.img.currentSrc, sound =  {soundName : null, volume : 0.5},frames ,speedAnimation}) { //assign input to movement
         var obj = this.map.get(this.name)
         document.addEventListener('keydown', (e) =>{
             if (e.key == input && movement == "up" ){ 
-                this.velocity.y = -1 * speed, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation)
+                this.velocity.y = -1 * speed, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)
             }
             if (e.key == input && movement == "down" ){ 
-                this.velocity.y = 1*speed, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation)
+                this.velocity.y = 1*speed, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)
             }
             if (e.key == input && movement == "right"){ 
-                this.velocity.x = 1*speed, this.keys.hasPressedRight = true, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation)
+                this.velocity.x = 1*speed, this.keys.hasPressedRight = true, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)
             }
             if (e.key == input && movement == "left"){ 
-                this.velocity.x = -1 * speed, this.keys.hasPressedLeft = true, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation)
+                this.velocity.x = -1 * speed, this.keys.hasPressedLeft = true, this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)
             }
             if (e.key == input && this.hasJumped && movement == "jump"){ 
                 this.velocity.y -= 1 * speed, this.hasJumped = false
-                this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation)
+                this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)
                 if(sound.soundName != null) {
                     var aud =  this.sounds.get(sound.soundName)
                     aud.volume = sound.volume
@@ -58,11 +58,11 @@ export default class Player extends Entity{
         }, true);
 
         document.addEventListener('keyup', (e) =>{
-            if (e.key == input && movement == "up" ) this.velocity.y = -15
-            if (e.key == input && movement == "down" ) this.velocity.y = 0
-            if (e.key == input && movement == "right") this.velocity.x = 0, this.keys.hasPressedRight = false
-            if (e.key == input && movement == "left") this.velocity.x = 0, this.keys.hasPressedLeft = false
-            if (e.key == " " && movement == "jump") this.velocity.y -= 0
+            if (e.key == input && movement == "up" ) this.velocity.y = -15, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
+            if (e.key == input && movement == "down" ) this.velocity.y = 0, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
+            if (e.key == input && movement == "right") this.velocity.x = 0, this.keys.hasPressedRight = false, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
+            if (e.key == input && movement == "left") this.velocity.x = 0, this.keys.hasPressedLeft = false, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
+            if (e.key == " " && movement == "jump") this.velocity.y -= 0, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
             this.img = this.SetImgSprite(this.saveImg)
         }, true);
 

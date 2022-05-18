@@ -23,15 +23,14 @@ var Player1 = MainGame.NewPlayer({ // create player
 Player1.AssignMovementEvent({
     input: "d", movement:"right", speed: 6, 
     animationImagePath: "assets/img/mario-movement.png"
-    // ,frames: [0,1],speedAnimation: 5
+    ,frames: [0,2],speedAnimation: 5
 })
-
 Player1.AssignMovementEvent({
     input: "q", movement: "left", speed: 6, 
-    animationImagePath: "./assets/img/block.png"})
+    animationImagePath: "assets/img/mario-movement-reversed.png",frames: [0,2],speedAnimation: 5})
 Player1.AssignMovementEvent({
     input: " ", movement: "jump", speed: 15, 
-    animationImagePath: "./assets/img/mario.jpg"
+    animationImagePath: "assets/img/mario-movement.png",frames: [0,2],speedAnimation: 5
 })
 
 
