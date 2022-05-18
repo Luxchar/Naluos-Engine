@@ -30,7 +30,7 @@ Player1.AssignMovementEvent({
     animationImagePath: "assets/img/mario-movement-reversed.png",frames: [0,2],speedAnimation: 5})
 Player1.AssignMovementEvent({
     input: " ", movement: "jump", speed: 15, 
-    animationImagePath: "assets/img/mario-movement.png",frames: [0,2],speedAnimation: 5
+    animationImagePath: "assets/img/mario-movement.png", animationImagePathReversed: "assets/img/mario-movement-reversed.png",  frames: [0,2],speedAnimation: 5
 })
 
 

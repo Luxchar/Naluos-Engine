@@ -120,11 +120,11 @@ export default class Game{
                 if (this.countframes == 8) this.countframes = 0, this.frames++ // speed of the sprite frame
                 // draw the sprite
                 
-                if (e.animations.get("jump") != undefined && e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("jump") != undefined && e.animations.get("left") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("jump") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("left") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,0,100,150, e.x, e.y, e.width, e.height)
+                if (e.animations.get("jump") != undefined && e.animations.get("right") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,10,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("jump") != undefined && e.animations.get("left") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,20,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("jump") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,10,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
+                } else if (e.animations.get("left") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
                 } else if (e.animations.get("up") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*4,0,100,150, e.x, e.y, e.width, e.height)
                 } else if (e.animations.get("down") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
                 } else this.Context.drawImage(e.img,(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
