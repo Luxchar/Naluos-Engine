@@ -8,12 +8,17 @@ export default class Entity{ //load entity with parameters
         this.name = name || "Default Entity"
         this.animations = new Map()
         this.map = map
+        this.save = {
+            x, y,
+        }
+        console.log(this.save)
         this.velocity = {
             gravity: 0.5,
             x: 0,
             y: 10,
         }
         this.isAEntity = true
+        this.isMonster = false
         if(img === "Rectangle") this.img = img
         else this.img = this.SetImgSprite(img)
         if (this.sprite != null) this.hasSprite = true
@@ -64,13 +69,6 @@ export default class Entity{ //load entity with parameters
             if (this.y + this.height + this.velocity.y <= this.Canvas.height*2) this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
         }
         this.map.set(this.name, this)
-    }
-
-    moveTo(x1,x2, speed){
-        if(x1 < x2){
-            this.x = 1*speed
-            this.map.set(this.name, this)
-        }
     }
 
     setCollision({bool = true, position = { top : { break : true, collision : true }, right: { break: false, collision: true} ,buttom : { break: false, collision: true }, left: {break: false, collision: true}} }){

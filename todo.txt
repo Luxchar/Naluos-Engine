@@ -1,6 +1,3 @@
-game engine:
-animation tileset
-
 documentation:
 landing page (choose level (bam bird or super mario))
 html explain how the engine works

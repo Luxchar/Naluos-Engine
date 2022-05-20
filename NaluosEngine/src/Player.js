@@ -72,7 +72,7 @@ export default class Player extends Entity{
     setFocus(){
         if(this.x > 400 && this.keys.hasPressedRight){
             this.map.forEach((e) => {
-                if(e.isEntity){
+                if(e.isEntity && !e.isMonster){
                     e.x -= this.velocity.x
                     this.map.set(e.name, e)
                     this.x = 400
@@ -94,6 +94,18 @@ export default class Player extends Entity{
     
     updateMouvement(){
         this.x += this.velocity.x
+        this.map.set(this.name, this)
+    }
+
+    teleport(x,y){
+        this.map.forEach(e => {
+            if(e.isEntity){
+                e.x = e.save.x
+                e.y = e.save.y
+                this.map.set(e.name, e)
+            }
+        });
+        this.x, this.y = x, y
         this.map.set(this.name, this)
     }
 } 

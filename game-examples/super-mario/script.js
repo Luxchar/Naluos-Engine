@@ -69,14 +69,15 @@ MainGame.playSoundOf({ // play sound
 var Monster = MainGame.NewEntity({ // add goomba
     name: "Goomba",
     x:250,y:200,
-    width:100,height:100, 
-    img: "./assets/img/goomba_sprite.jpg" 
+    width:40,height:40, 
+    img: "https://toppng.com/uploads/preview/oomba-8-bit-goomba-11562923680chnjskwjpc.png" 
 })
 Monster.isAEntity = false
 MainGame.NewEntity({ // add piece
-    x:50,y:800,
-    width:100,height:100, 
-    img: "./assets/img/piece.png" 
+    name: "Piece",
+    x:250,y:100,
+    width:40,height:40, 
+    img: "./assets/img/piece.png"
 })
 
 var isRunning = true 
@@ -104,8 +105,9 @@ function animate(){ // animate game
         Player1.setCollision(true)
         Monster.setCollision(true)
         if(Player1.y >= MainGame.Canvas.height + 100){
-            stopAnimate(handleGame)
-            if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name) && MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
+            //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
+            Player1.teleport(100,500)
+            console.log(Player1.y)
         }
     } else {
         console.log('paused game menu')
