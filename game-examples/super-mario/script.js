@@ -30,7 +30,8 @@ Player1.AssignMovementEvent({
     animationImagePath: "assets/img/mario-movement-reversed.png",frames: [4,6],speedAnimation: 8})
 Player1.AssignMovementEvent({
     input: " ", movement: "jump", speed: 15, 
-    animationImagePath: "assets/img/mario-movement.png", animationImagePathReversed: "assets/img/mario-movement-reversed.png",  frames: [0,2],speedAnimation: 8
+    animationImagePath: "assets/img/mario-movement.png", animationImagePathReversed: "assets/img/mario-movement-reversed.png",  frames: [0,2],speedAnimation: 8,
+    sound: {soundName: "JumpSound", volume: 0.2}
 })
 
 
@@ -51,13 +52,19 @@ MainGame.addSound({ // import sound
 
 MainGame.addSound({ // import sound
     name: "JumpSound",
-    PathOrUrl: "assets/sounds/jump.mp3",
+    PathOrUrl: "assets/sounds/mario_jump.mp3",
+})
+
+MainGame.addSound({ // import sound
+    name: "DeathSound",
+    PathOrUrl: "assets/sounds/mario_falling.mp3",
 })
 
 MainGame.playSoundOf({ // play sound
     name: "ThemeSound",
-    volume: 0.0005
+    volume: 0.05
 })
+
 
 var isRunning = true 
 document.addEventListener('keydown', function(event){ //pause game
@@ -83,9 +90,8 @@ function animate(){ // animate game
         Player1.setGravity(true)
         Player1.setCollision(true)
         if(Player1.y >= MainGame.Canvas.height + 100){
-            alert("T'es une merde")
             stopAnimate(handleGame)
-            if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name)
+            if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name) && MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
         }
     } else {
         console.log('paused game menu')
