@@ -47,7 +47,7 @@ export default class Player extends Entity{
             if (e.key == input && this.hasJumped && movement == "jump"){ 
                 this.velocity.y -= 1 * speed, this.hasJumped = false
                 if(this.keys.hasPressedLeft) this.img = this.SetImgSprite(animationImagePathReversed, frames, speedAnimation, movement)
-                else this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement), console.log("left")   
+                else this.img = this.SetImgSprite(animationImagePath, frames, speedAnimation, movement)  
 
                 if(sound.soundName != null) {
                     var aud =  this.sounds.get(sound.soundName)
@@ -91,50 +91,9 @@ export default class Player extends Entity{
             })
         }
     }
-
-    setGravity({bool = true}){
-        if(bool){
-            if (this.y + this.height + this.velocity.y <= this.Canvas.height*2) this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
-        }
-        this.map.set(this.name, this)
-    }
     
     updateMouvement(){
         this.x += this.velocity.x
         this.map.set(this.name, this)
-    }
-
-    setCollision({bool = true, position = { top : { break : true, collision : true }, right: { break: false, collision: true} ,buttom : { break: false, collision: true }, left: {break: false, collision: true}} }){
-        if(bool){
-            this.map.forEach(e => {
-                if(e.isEntity){
-                    if(position.top.collision){
-                        if(this.y + this.height >= e.y + e.height && this.y + this.velocity.y <= e.y + e.height && this.x + this.width >= e.x && this.x <= e.x + e.width){
-                            this.velocity.y = 0,  this.hasJumped = false
-                            if(position.top.break) this.map.delete(e.name)
-                        }     
-                    }
-                    if(position.buttom.collision){
-                        if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) {
-                            this.velocity.y = 0, this.hasJumped = true
-                        }
-                    }
-                    if(position.left.collision){ // collision with right side of the entity
-                        if(this.x + this.velocity.x >= e.x-this.width && this.x - this.velocity.x <= e.x && this.y + this.height >= e.y && this.y <= e.y + e.height){
-                            this.velocity.x = -1
-                            this.x = e.x - this.width
-                            position.top.collision = false
-                        }
-                    }
-                    if(position.right.collision){ // collision with left side of the entity
-                        if(this.x + this.width <= e.x + e.width + this.width - this.velocity.x && this.x + this.width + this.velocity.x >= e.x + e.width && this.y + this.height >= e.y && this.y <= e.y + e.height){
-                            this.velocity.x = 1
-                            this.x = e.x + e.width
-                            position.top.collision = false
-                        }
-                    }
-                }
-            });
-        }
     }
 } 

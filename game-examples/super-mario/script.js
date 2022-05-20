@@ -66,6 +66,19 @@ MainGame.playSoundOf({ // play sound
 })
 
 
+var Monster = MainGame.NewEntity({ // add goomba
+    name: "Goomba",
+    x:250,y:200,
+    width:100,height:100, 
+    img: "./assets/img/goomba_sprite.jpg" 
+})
+Monster.isAEntity = false
+MainGame.NewEntity({ // add piece
+    x:50,y:800,
+    width:100,height:100, 
+    img: "./assets/img/piece.png" 
+})
+
 var isRunning = true 
 document.addEventListener('keydown', function(event){ //pause game
     if(event.key === "Escape"){
@@ -77,18 +90,19 @@ document.addEventListener('keydown', function(event){ //pause game
         }
     }
 });
+
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
         MainGame.ClearCanvas() // clear canvas to show next frame
         MainGame.Draw() // draw sprites of the entities
-
-
+        Monster.setGravity(true)
         Player1.updateMouvement()
         MainGame.DrawMap(map, MapDefine)
         Player1.setFocus()
         Player1.setGravity(true)
         Player1.setCollision(true)
+        Monster.setCollision(true)
         if(Player1.y >= MainGame.Canvas.height + 100){
             stopAnimate(handleGame)
             if(MainGame.Entities.get(Player1.name)) MainGame.Entities.delete(Player1.name) && MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})

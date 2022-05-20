@@ -5,7 +5,6 @@ documentation:
 landing page (choose level (bam bird or super mario))
 html explain how the engine works
 
-
 game-examples:
 build a level for super mario 
 - faire api go (store scoreboard in db (mongodb ?))

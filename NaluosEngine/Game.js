@@ -184,7 +184,8 @@ export default class Game{
             width,
             height,
             img,
-            sounds: this.Sounds
+            sounds: this.Sounds,
+            map: this.Entities,
         })
     }
 }
