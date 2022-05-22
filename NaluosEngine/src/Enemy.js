@@ -1,6 +1,6 @@
 import Entity from './Entity.js';
 
-export default class Monster extends Entity{ //load entity with parameters
+export default class Enemy extends Entity{ //load entity with parameters
     constructor({Canvas, Context, name, x = 0, y = 0, width = 800, height = 600, img = "Rectangle", sounds, sprite = null, map}) {
         this.sounds = sounds
         this.InitEntityPosition(x, y);

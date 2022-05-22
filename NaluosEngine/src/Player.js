@@ -97,15 +97,16 @@ export default class Player extends Entity{
         this.map.set(this.name, this)
     }
 
-    teleport(x,y){
+    teleport(tpX,tpY){
         this.map.forEach(e => {
             if(e.isEntity){
-                e.x = e.save.x
+                e.x = e.save.x - tpX
                 e.y = e.save.y
                 this.map.set(e.name, e)
             }
         });
-        this.x, this.y = x, y
+        this.x = 150
+        this.y = this.Canvas.height - tpY
         this.map.set(this.name, this)
     }
 } 

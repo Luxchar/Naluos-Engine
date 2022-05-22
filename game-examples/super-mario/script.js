@@ -106,7 +106,7 @@ function animate(){ // animate game
         Monster.setCollision(true)
         if(Player1.y >= MainGame.Canvas.height + 100){
             //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
-            Player1.teleport(100,500)
+            Player1.teleport(0,200)
             console.log(Player1.y)
         }
     } else {
