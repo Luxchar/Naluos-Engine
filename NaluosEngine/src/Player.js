@@ -19,6 +19,8 @@ export default class Player extends Entity{
             hasPressedDown: false,
         }
         this.score = 0
+        this.isAEntity = false
+        this.isMonster = false
     }
 
     get nameOfPlayer(){
@@ -72,7 +74,7 @@ export default class Player extends Entity{
     setFocus(){
         if(this.x > 400 && this.keys.hasPressedRight){
             this.map.forEach((e) => {
-                if(e.isEntity && !e.isMonster){
+                if(!e.isEntity || !e.isMonster){
                     e.x -= this.velocity.x
                     this.map.set(e.name, e)
                     this.x = 400
@@ -82,7 +84,7 @@ export default class Player extends Entity{
         }
         if(this.x < 200 && this.keys.hasPressedLeft){
             this.map.forEach((e) => {
-                if(e.isEntity){
+                if(!e.isEntity || !e.isMonster){
                     e.x -= this.velocity.x
                     this.x = 200
                     this.map.set(e.name, e)

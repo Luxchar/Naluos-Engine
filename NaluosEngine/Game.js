@@ -1,5 +1,6 @@
 import Player from "./src/Player.js";
 import Entity from "./src/Entity.js";
+import Enemy from "./src/Enemy.js";
 
 export default class Game{
     constructor({DivHtmlID = "#game-container", GameName = "Game Default Name", GameWidth = 800, GameHeight = 500}){
@@ -69,7 +70,7 @@ export default class Game{
     }
     
     async playSound(name) {
-        document.body.addEventListener("mousemove", function () {
+        document.body.addEventListener("onload", function () {
             return this.Sounds.get(name)
         })
     }
@@ -91,6 +92,15 @@ export default class Game{
         this.Objects.set(ent.nameOfEntity, ent)
         return ent
     }  
+
+    NewEnemy({name, x, y, width, height, img, sprite}){
+        var ent = this.#addEnemy({
+            name, x, y, width, height, img, sprite
+        })
+        this.Entities.set(ent.nameOfEntity, ent)
+        this.Objects.set(ent.nameOfEntity, ent)
+        return ent
+    }
 
     DrawMap(ArrayMap, DefineMap = {}) {
         if (ArrayMap[0].length > 0){
@@ -176,6 +186,21 @@ export default class Game{
     
     #addEntity({name,x,y, width, height, img, sprite}){ // add entity to the game
         return new Entity({
+            Canvas: this.Canvas,    
+            Context: this.Context,
+            x,
+            y,
+            name,
+            width,
+            height,
+            img,
+            sounds: this.Sounds,
+            map: this.Entities,
+        })
+    }
+
+    #addEnemy({name,x,y, width, height, img, sprite}){ // add entity to the game
+        return new Enemy({
             Canvas: this.Canvas,    
             Context: this.Context,
             x,

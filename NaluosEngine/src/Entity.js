@@ -71,6 +71,12 @@ export default class Entity{ //load entity with parameters
         this.map.set(this.name, this)
     }
 
+    teleport(tpX,tpY){
+        this.x = tpX
+        this.y = this.Canvas.height - tpY
+        this.map.set(this.name, this)
+    }
+
     setCollision({bool = true, position = { top : { break : true, collision : true }, right: { break: false, collision: true} ,buttom : { break: false, collision: true }, left: {break: false, collision: true}} }){
         if(bool){
             this.map.forEach(e => {

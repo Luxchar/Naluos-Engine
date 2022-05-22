@@ -66,7 +66,7 @@ MainGame.playSoundOf({ // play sound
 })
 
 
-var Monster = MainGame.NewEntity({ // add goomba
+var Monster = MainGame.NewEnemy({ // add goomba
     name: "Goomba",
     x:250,y:200,
     width:40,height:40, 
@@ -75,7 +75,7 @@ var Monster = MainGame.NewEntity({ // add goomba
 Monster.isAEntity = false
 MainGame.NewEntity({ // add piece
     name: "Piece",
-    x:250,y:100,
+    x:100,y:10,
     width:40,height:40, 
     img: "./assets/img/piece.png"
 })
@@ -104,10 +104,11 @@ function animate(){ // animate game
         Player1.setGravity(true)
         Player1.setCollision(true)
         Monster.setCollision(true)
+        Monster.setInfiteMovement({x1: 0, x2: 100})
         if(Player1.y >= MainGame.Canvas.height + 100){
             //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             Player1.teleport(0,200)
-            console.log(Player1.y)
+            // postscore()
         }
     } else {
         console.log('paused game menu')
@@ -115,6 +116,23 @@ function animate(){ // animate game
 
 }
 
+/*function postscore() {
+    const response = await fetch("https://reqbin.com/echo/post/json", {
+    method: 'POST',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+    },
+    body: `{
+    "username": NagibLOL,
+    "score": "10",
+    }`,
+    });
+
+    response.json().then(data => {
+    console.log(data);
+    });
+} */
 function stopAnimate(h){
     window.cancelAnimationFrame(h)
 }
