@@ -8,12 +8,13 @@ import (
 	"os"
 )
 
-type score struct {
+type Score struct {
 	Username string `json:"username"`
 	Score    int    `json:"score"`
 }
 
 func scoreOutputHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Print("New GET request : ", r.URL)
 	if r.URL.Path != "/scoreGET" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
 		return
@@ -37,29 +38,26 @@ func scoreOutputHandler(w http.ResponseWriter, r *http.Request) {
 		for scan.Scan() {
 			w.Write([]byte(scan.Text())) //xPrint byte
 		}
+		fmt.Print("get request")
 	}
 }
 
 func scorestartHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	fmt.Println("New POST request : ", r.URL)
+	fmt.Print("New POST request : ", r.URL)
 	if r.Method != "POST" {
+		fmt.Println("error")
 		http.Error(w, "Method is not supported.", http.StatusBadRequest)
 		return
 	} else if r.Method == "POST" {
-		// postscore(w, r, score{})
+		fmt.Print("New POST request : ", r.URL)
+		postscore(w, r, Score{})
 	}
 }
 
-// func postscore(w http.ResponseWriter, r *http.Request, score score) {
-// 	decoder := json.NewDecoder(r.Body)
-// 	var t score
-// 	err := decoder.Decode(&t)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	log.Println(t.Test)
-// }
+func postscore(w http.ResponseWriter, r *http.Request, score Score) {
+	fmt.Print("fdp")
+}
 
 func main() {
 	FileServer := http.FileServer(http.Dir("./static"))

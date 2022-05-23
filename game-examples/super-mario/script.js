@@ -92,23 +92,25 @@ document.addEventListener('keydown', function(event){ //pause game
     }
 });
 
+Player1.LevelOfGravity(0.4)
+Monster.teleport(150,300)
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
         MainGame.ClearCanvas() // clear canvas to show next frame
         MainGame.Draw() // draw sprites of the entities
-        Monster.setGravity(true)
         Player1.updateMouvement()
         MainGame.DrawMap(map, MapDefine)
         Player1.setFocus()
         Player1.setGravity(true)
         Player1.setCollision(true)
         Monster.setCollision(true)
-        Monster.setInfiteMovement({x1: 0, x2: 100})
+        Monster.setInfiteMovementX({count: 100})
+        Monster.setInfiteMovementY({count: 50})
         if(Player1.y >= MainGame.Canvas.height + 100){
             //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             Player1.teleport(0,200)
-            // postscore()
+            postscore()
         }
     } else {
         console.log('paused game menu')
@@ -116,23 +118,18 @@ function animate(){ // animate game
 
 }
 
-/*function postscore() {
-    const response = await fetch("https://reqbin.com/echo/post/json", {
-    method: 'POST',
-    headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-    },
-    body: `{
-    "username": NagibLOL,
-    "score": "10",
-    }`,
-    });
+async function postscore() {
+    let data = {Username: "NagibLOL", Score: 10};
 
-    response.json().then(data => {
-    console.log(data);
+    fetch("http://127.0.0.1:8080/scorePOST", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*"}, 
+      body: JSON.stringify(data)
+    }).then(res => {
+      console.log("Request complete! response:", res);
     });
-} */
+} 
+
 function stopAnimate(h){
     window.cancelAnimationFrame(h)
 }
