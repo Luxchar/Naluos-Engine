@@ -1,0 +1,9 @@
+@media (max-width: 600px){
+	footer p{
+		font-size: 0.9rem;
+		text-align: center;
+	}
+	.footer2{
+		display: none;
+	}
+  }

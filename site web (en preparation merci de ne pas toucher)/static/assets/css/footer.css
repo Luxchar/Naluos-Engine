@@ -1,0 +1,38 @@
+footer {
+
+    width: 100%;
+    box-shadow: 10px 5px 5px rgb(175, 175, 175);
+    background-image: url("../img/fondfooter.png");
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    padding-top: 2rem;
+
+}
+
+.footer1 {
+    text-shadow: 1px 1px 2px rgb(34, 34, 34);
+    color: white;
+    height: 1rem;
+    width: 1rem;
+    flex: 1;
+    font-size: 1.3rem;
+}
+
+.footer2 {
+    height: 1rem;
+    width: 0.5rem;
+    flex: 2;
+}
+
+.footer3 {
+    text-shadow: 1px 1px 2px rgb(29, 29, 29);
+    color: white;
+    height: 1rem;
+    width: 1rem;
+    flex: auto;
+    font-size: 1.3rem;
+}

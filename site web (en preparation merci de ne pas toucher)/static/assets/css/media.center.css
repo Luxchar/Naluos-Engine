@@ -1,0 +1,40 @@
+/* .presentation{
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.295);
+    color: rgb(0, 0, 0);
+    font-size: 2rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: rgb(231, 238, 189);
+    text-align: center;
+} */
+@media (max-width: 600px){
+	.presentation{ 
+        padding-left: 1rem;
+        padding-right: 1rem;
+	}
+    .gauche{
+        display: none;
+    }
+    .droite{
+        display: none;
+    }
+    .centre h1{
+        font-size: 1.5rem;
+    }
+    .centre p{
+        padding-top: 1rem;
+        text-align: center;
+        color: black;
+        font-size: 1rem;
+    }
+    .separator{
+        margin-left: 12rem;
+        margin-right: 12rem;
+    }
+    .centre p{
+        padding-left: 0rem;
+        padding-right: 0rem;
+    }
+}

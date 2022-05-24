@@ -1,0 +1,92 @@
+
+header {
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    border: 1px solid black;
+	overflow: hidden;
+	width: 100%;
+	box-shadow: 10px 5px 5px rgb(109, 109, 109);
+	display: flex;
+	background-image: url("../img/fond.png");
+	height: 10rem;
+}
+
+header lu {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	font-size: 1.6rem;
+}
+
+header li {
+	margin-left: 1rem;
+	text-shadow: 1px 1px 2px rgb(255, 255, 255);
+}
+
+header title_h {
+	
+	padding-left: 2rem;
+	text-align: center;
+	font-size: 3rem;
+}
+
+header p {
+	padding-bottom: 2rem;
+	text-shadow: 1px 1px 2px rgb(240, 240, 240);
+}
+
+/*-- Header div--*/
+
+.Img_menu {
+    order: 1;
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+    font-size: 20px;
+}
+
+.header_menu {
+    order: 2;
+    flex-basis: 800px;
+    -webkit-flex-basis: 800px;
+    height: 100%;
+    margin: auto;
+    padding-bottom: 50px;
+}
+
+.Img_menu2 {
+    order: 3;
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+}
+
+/*-- Selection a --*/
+a:hover {
+	text-shadow: 1px 1px 2px rgb(143, 143, 143);
+	font-size: 1.3rem;
+	color: white;
+}
+
+a {
+	text-decoration: none;
+	color: rgb(0, 0, 0);
+}
+
+/*--Img on header--*/
+
+.tuyau_header {
+	padding-left: 2rem;
+	width: 9rem;
+}
+
+.mario_header {
+	margin-top: 1rem;
+	width: 9rem;
+}

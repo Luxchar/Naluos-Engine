@@ -1,0 +1,13 @@
+@media (max-width: 600px){
+	header img{ 
+		display: none;
+	}
+	header lu li{
+		font-size: 0.9rem;
+	}
+}
+@media (max-width: 300px){
+	.titleh{ 
+		display: none;
+	}
+  }
