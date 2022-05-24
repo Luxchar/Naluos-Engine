@@ -23,6 +23,14 @@ export default class Player extends Entity{
         this.isMonster = false
     }
 
+    LevelOfGravity(levelOfGrativity = 0.5){
+        this.velocity.gravity = levelOfGrativity
+    }
+
+    FallSpeed(levelOfFallingSpeed = 10){
+        this.velocity.y = levelOfFallingSpeed
+    }
+
     get nameOfPlayer(){
         return this.name
     }

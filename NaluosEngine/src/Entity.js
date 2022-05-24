@@ -11,7 +11,6 @@ export default class Entity{ //load entity with parameters
         this.save = {
             x, y,
         }
-        console.log(this.save)
         this.velocity = {
             gravity: 0.5,
             x: 0,

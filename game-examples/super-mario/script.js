@@ -111,6 +111,7 @@ function animate(){ // animate game
             //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             Player1.teleport(0,200)
             postscore()
+            getscore()
         }
     } else {
         console.log('paused game menu')
@@ -118,15 +119,20 @@ function animate(){ // animate game
 
 }
 
+function getscore() {
+    fetch("http://127.0.0.1:8080/scoreGET").then(function(response) {
+        return response.json();
+      }).then(function(data) {
+        console.log(data);
+      });
+}
+
 async function postscore() {
     let data = {Username: "NagibLOL", Score: 10};
 
     fetch("http://127.0.0.1:8080/scorePOST", {
       method: "POST",
-      headers: {'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*"}, 
       body: JSON.stringify(data)
-    }).then(res => {
-      console.log("Request complete! response:", res);
     });
 } 
 
