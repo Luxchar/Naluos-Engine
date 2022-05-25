@@ -29,22 +29,9 @@ func scoreOutputHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		fmt.Println("New GET request")
-		//x--------------------------------------------------x Open Json handler
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.WriteHeader(http.StatusOK)
-		//x--------------------------------------------------x
-		// aff, err := os.Open("../struct.json")
-		// if err != nil {
-		// 	log.Fatalf("failed to encode struct.json in api.go")
-		// }
-		// scan := bufio.NewScanner(aff)
-		// scan.Split(bufio.ScanLines)
-		// for scan.Scan() {
-		// 	w.Write([]byte(scan.Text()))
-		// }
-		// aff.Close()
-
 		GetReq(w, r)
 	}
 }
@@ -76,8 +63,7 @@ func GetReq(w http.ResponseWriter, r *http.Request) { // Get score from DB and r
 		panic(err)
 	}
 
-	//write to w.Write the result
-	json.NewEncoder(w).Encode(results)
+	json.NewEncoder(w).Encode(results) //encode the result to json and send it to client
 
 	// Close the MongoDB connection
 	err = client.Disconnect(ctx)
