@@ -1,4 +1,4 @@
-.conteneur {
+/* .conteneur {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
@@ -8,8 +8,9 @@
     -webkit-align-items: flex-start;
     align-items: flex-start;
     border: 1px solid black;
-}
+} */
 
+/* 
 .gauche {
     order: 1;
     display: -webkit-flex;
@@ -21,7 +22,7 @@
 .centre {
     order: 2;
     flex-basis: 800px;
-    -webkit-flex-basis: 800px; /*<-- RETIRER POUR LA PREMIERE PAGE*/
+    -webkit-flex-basis: 800px; 
     height: 100%;
     margin: auto;
     background-color: #fff;
@@ -33,4 +34,4 @@
     display: -webkit-flex;
     display: flex;
     height: 100%;
-}
+} */

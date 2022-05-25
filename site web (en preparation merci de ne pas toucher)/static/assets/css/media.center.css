@@ -1,13 +1,11 @@
-/* .presentation{
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.295);
-    color: rgb(0, 0, 0);
-    font-size: 2rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: rgb(231, 238, 189);
-    text-align: center;
+/* ..separator{
+    margin-left: 54rem;
+    margin-right: 54rem;
+    margin-top: 0.5rem;
+    height: 0.2rem;
+    font-size: 1px;
+    border-radius: 1rem;
+    background-color: rgb(0, 0, 0);
 } */
 @media (max-width: 600px){
 	.presentation{ 
@@ -19,6 +17,10 @@
     }
     .droite{
         display: none;
+    }
+    .centre{
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
     .centre h1{
         font-size: 1.5rem;
@@ -33,8 +35,29 @@
         margin-left: 12rem;
         margin-right: 12rem;
     }
-    .centre p{
-        padding-left: 0rem;
-        padding-right: 0rem;
+    .separator{
+        margin-left: 12rem;
+        margin-right: 12rem;
+        margin-top: 0.5rem;
+        height: 0.2rem;
+        font-size: 1px;
+        border-radius: 1rem;
+        background-color: rgb(0, 0, 0);
+    }
+    .centre div{
+        justify-content: center ;
+        display: flex;
+        flex-direction: column;
+    }
+    .centre div lu{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+    }
+    .examplegame {
+        text-align: center;
+        margin-top: 1em;
+        margin-left: 0rem;
     }
 }

@@ -12,7 +12,6 @@ header {
 	overflow: hidden;
 	width: 100%;
 	box-shadow: 10px 5px 5px rgb(109, 109, 109);
-	display: flex;
 	background-image: url("../img/fond.png");
 	height: 10rem;
 }
