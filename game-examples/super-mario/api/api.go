@@ -45,7 +45,7 @@ func scoreOutputHandler(w http.ResponseWriter, r *http.Request) {
 		// }
 		// aff.Close()
 
-		// GetReq(w, r)
+		GetReq(w, r)
 	}
 }
 
@@ -68,34 +68,17 @@ func GetReq(w http.ResponseWriter, r *http.Request) { // Get score from DB and r
 	col := client.Database("mario").Collection("scoreboard")
 
 	// Sort by score in descending order and limit to 10 results
-	cur, err := col.Find(ctx, bson.M{}).Sort(bson.M{"score": -1}).Limit(10).DecodeAll(Score{})
-	// .Sort(bson.M{"score": -1}).Limit(10).DecodeAll(Score{})
-	if err != nil {
-		log.Fatal(err)
+	filter := bson.D{}
+	opts := options.Find().SetSort(bson.D{{"score", 1}}).SetLimit(10)
+	cursor, err := col.Find(context.TODO(), filter, opts)
+	var results []bson.D
+	if err = cursor.All(context.TODO(), &results); err != nil {
+		panic(err)
 	}
 
-	// Declare an empty array to store documents returned
-	var result []Score
+	//write to w.Write the result
+	json.NewEncoder(w).Encode(results)
 
-	for cur.Next(ctx) {
-		err := cur.Decode(&result)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	fmt.Print(result)
-
-	//select element in db by score.Username
-	cur, err := col.Find(ctx, bson.M{"username": score.Username})
-	if err != nil {
-		log.Fatal(err)
-	}
-	for cur.Next(ctx) {
-		err := cur.Decode(&scoretest)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
 	// Close the MongoDB connection
 	err = client.Disconnect(ctx)
 	if err != nil {
