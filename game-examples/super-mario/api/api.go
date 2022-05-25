@@ -65,8 +65,6 @@ func scorestartHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		//check if score is already in the database
-
 		// Declare host and port options to pass to the Connect() method
 		clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
 		fmt.Println("clientOptions type:", reflect.TypeOf(clientOptions), "\n")
@@ -79,13 +77,24 @@ func scorestartHandler(w http.ResponseWriter, r *http.Request) {
 		// Access a MongoDB collection through a database
 		col := client.Database("mario").Collection("scoreboard")
 		ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
-		fmt.Println("Collection type:", reflect.TypeOf(col), "\n")
-		result, insertErr := col.InsertOne(ctx, score)
-		if insertErr != nil {
-			fmt.Println("InsertOne() ERROR:", insertErr)
-			os.Exit(1)
+
+		cursor, err := col.Find(ctx, score) //find the score
+		if err != nil {
+			log.Fatal(err)
 		}
-		fmt.Println("Inserted a single document:", result.InsertedID)
+		var scoretest Score
+		if err = cursor.All(ctx, &scoretest); err != nil { //if score is not found
+			fmt.Println("New score")
+			col.InsertOne(ctx, score)
+		} else {
+			fmt.Println("Update score")
+			if score.Score > scoretest.Score {
+				fmt.Print("New score is better than old one")
+				col.UpdateOne(ctx, score, scoretest)
+				// col.DeleteOne(ctx, scoretest)
+				// col.InsertOne(ctx, score)
+			}
+		}
 	}
 }
 
