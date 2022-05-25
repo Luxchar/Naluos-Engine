@@ -1,16 +1,15 @@
 package main
 
 import (
-	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"reflect"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -21,7 +20,6 @@ type Score struct {
 }
 
 func scoreOutputHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("New GET request : ", r.URL)
 	if r.URL.Path != "/scoreGET" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
 		return
@@ -36,18 +34,72 @@ func scoreOutputHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.WriteHeader(http.StatusOK)
 		//x--------------------------------------------------x
-		aff, err := os.Open("../struct.json")
-		if err != nil {
-			log.Fatalf("failed to encode struct.json in api.go")
-		}
-		scan := bufio.NewScanner(aff)
-		scan.Split(bufio.ScanLines)
-		for scan.Scan() {
-			w.Write([]byte(scan.Text()))
-		}
-		aff.Close()
+		// aff, err := os.Open("../struct.json")
+		// if err != nil {
+		// 	log.Fatalf("failed to encode struct.json in api.go")
+		// }
+		// scan := bufio.NewScanner(aff)
+		// scan.Split(bufio.ScanLines)
+		// for scan.Scan() {
+		// 	w.Write([]byte(scan.Text()))
+		// }
+		// aff.Close()
 
-		//get score and return it
+		// GetReq(w, r)
+	}
+}
+
+func GetReq(w http.ResponseWriter, r *http.Request) { // Get score from DB and return it
+	// Declare host and port options to pass to the Connect() method
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+
+	// Connect to the MongoDB and return Client instance
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+
+	if err != nil {
+		fmt.Println("mongo.Connect() ERROR:", err)
+		os.Exit(1)
+	}
+
+	// Declare Context type object for managing multiple API requests
+	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
+
+	// Access a MongoDB collection through a database
+	col := client.Database("mario").Collection("scoreboard")
+
+	// Sort by score in descending order and limit to 10 results
+	cur, err := col.Find(ctx, bson.M{}).Sort(bson.M{"score": -1}).Limit(10).DecodeAll(Score{})
+	// .Sort(bson.M{"score": -1}).Limit(10).DecodeAll(Score{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Declare an empty array to store documents returned
+	var result []Score
+
+	for cur.Next(ctx) {
+		err := cur.Decode(&result)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	fmt.Print(result)
+
+	//select element in db by score.Username
+	cur, err := col.Find(ctx, bson.M{"username": score.Username})
+	if err != nil {
+		log.Fatal(err)
+	}
+	for cur.Next(ctx) {
+		err := cur.Decode(&scoretest)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	// Close the MongoDB connection
+	err = client.Disconnect(ctx)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
@@ -64,37 +116,60 @@ func scorestartHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
+		PostReq(w, r, score)
+	}
+}
 
-		// Declare host and port options to pass to the Connect() method
-		clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-		fmt.Println("clientOptions type:", reflect.TypeOf(clientOptions), "\n")
-		// Connect to the MongoDB and return Client instance
-		client, err := mongo.Connect(context.TODO(), clientOptions)
-		if err != nil {
-			fmt.Println("mongo.Connect() ERROR:", err)
-			os.Exit(1)
-		}
-		// Access a MongoDB collection through a database
-		col := client.Database("mario").Collection("scoreboard")
-		ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
+func PostReq(w http.ResponseWriter, r *http.Request, score Score) {
 
-		cursor, err := col.Find(ctx, score) //find the score
+	// Declare host and port options to pass to the Connect() method
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+
+	// Connect to the MongoDB and return Client instance
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		fmt.Println("mongo.Connect() ERROR:", err)
+		os.Exit(1)
+	}
+
+	// Declare Context type object for managing multiple API requests
+	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
+
+	// Access a MongoDB collection through a database
+	col := client.Database("mario").Collection("scoreboard")
+
+	// Declare an empty array to store documents returned
+	// var result []Score
+	var scoretest = Score{}
+
+	//select element in db by score.Username
+	cur, err := col.Find(ctx, bson.M{"username": score.Username})
+	if err != nil {
+		log.Fatal(err)
+	}
+	for cur.Next(ctx) {
+		err := cur.Decode(&scoretest)
 		if err != nil {
 			log.Fatal(err)
 		}
-		var scoretest Score
-		if err = cursor.All(ctx, &scoretest); err != nil { //if score is not found
-			fmt.Println("New score")
+	}
+
+	if scoretest.Username != "" {
+		fmt.Println("Update score")
+		if score.Score > scoretest.Score {
+			fmt.Print("New score is better than old one")
+			col.DeleteOne(ctx, scoretest)
 			col.InsertOne(ctx, score)
-		} else {
-			fmt.Println("Update score")
-			if score.Score > scoretest.Score {
-				fmt.Print("New score is better than old one")
-				col.UpdateOne(ctx, score, scoretest)
-				// col.DeleteOne(ctx, scoretest)
-				// col.InsertOne(ctx, score)
-			}
 		}
+	} else { //if score is not found
+		fmt.Println("New score")
+		col.InsertOne(ctx, score)
+	}
+
+	// Close the MongoDB connection
+	err = client.Disconnect(ctx)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
