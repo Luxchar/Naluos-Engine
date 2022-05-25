@@ -70,7 +70,7 @@ var Monster = MainGame.NewEnemy({ // add goomba
     name: "Goomba",
     x:250,y:200,
     width:40,height:40, 
-    img: "https://toppng.com/uploads/preview/oomba-8-bit-goomba-11562923680chnjskwjpc.png" 
+    img: "./assets/img/goomba.png" 
 })
 Monster.isAEntity = false
 MainGame.NewEntity({ // add piece
