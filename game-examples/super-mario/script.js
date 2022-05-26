@@ -21,7 +21,7 @@ var Player1 = MainGame.NewPlayer({ // create player
 })
 
 Player1.AssignMovementEvent({
-    input: "d", movement:"right", speed: 6, 
+    input: "d", movement:"right", speed: 25, 
     animationImagePath: "assets/img/mario-movement.png"
     ,frames: [0,2],speedAnimation: 8
 })
@@ -107,9 +107,20 @@ function animate(){ // animate game
         Monster.setCollision(true)
         Monster.setInfiteMovementX({count: 100})
         Monster.setInfiteMovementY({count: 50})
+
+        //lose game
         if(Player1.y >= MainGame.Canvas.height + 100){
             //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             Player1.teleport(0,200)
+            postscore()
+            getscore()
+        }
+        if (timer == 0) { // if timer is 0, stop game
+            stopAnimate(handleGame)
+        }
+        //if player touches the endflag of the map
+        if(Player1.x >= MainGame.Canvas.width - Player1.width){
+            stopAnimate(handleGame)
             postscore()
             getscore()
         }
@@ -118,6 +129,26 @@ function animate(){ // animate game
     }
 
 }
+var timer = 1;
+function startTimer(duration) {
+    var display = document.querySelector('#time');
+    timer = duration;
+    setInterval(function () {
+        var seconds = parseInt(timer, 10);
+
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    startTimer(60 * 6-1);
+};
 
 function getscore() {
     fetch("http://127.0.0.1:8080/scoreGET").then(function(response) {
@@ -148,7 +179,7 @@ for (let index = 1; index <= 120; index++) {
             name: "Objet" + index,
             x: 1600+index*60, y: MainGame.Canvas.height - 300,
             width: 60, height: 60,
-            img: "./assets/img/block_interrogation_mark.jpg",
+            img: "./assets/img/block_interrogation_mark.jpg"
         })
     } 
     if ((index == 3) || (index == 1) || (index == 60) || (index == 62)){ {    
@@ -210,6 +241,21 @@ for (let i = 0; i <= 125; i++) { //ground
     }
 
 }
+
+MainGame.NewEntity({
+    name: "endflag",
+    x: 6500,y:MainGame.Canvas.height-550,
+    width: 500, height: 500,
+    img: "./assets/img/endflag.jpeg"
+})
+
+MainGame.NewEntity({
+    name: "peach",
+    x: 7150,y:MainGame.Canvas.height-150,
+    width: 100, height: 100,
+    img: "./assets/img/peach.jpeg"
+})
+
 
 
 animate()
