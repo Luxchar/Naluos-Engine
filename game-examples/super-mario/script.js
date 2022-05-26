@@ -142,15 +142,16 @@ function stopAnimate(h){
 
 //ENTITIES DEFINING
 
-for (let index = 1; index <= 3; index++) {
-    if (index == 2){
+for (let index = 1; index <= 120; index++) {
+    if ((index == 2) || (index == 61)){
         MainGame.NewEntity({
             name: "Objet" + index,
             x: 1600+index*60, y: MainGame.Canvas.height - 300,
             width: 60, height: 60,
             img: "./assets/img/block_interrogation_mark.jpg",
         })
-    } else {    
+    } 
+    if ((index == 3) || (index == 1) || (index == 60) || (index == 62)){ {    
         MainGame.NewEntity({
             name: "Objet" + index,
             x: 1600+index*60, y: MainGame.Canvas.height - 300,
@@ -158,6 +159,7 @@ for (let index = 1; index <= 3; index++) {
             img: "./assets/img/block.png"
         })
     }
+}
 }
 
 for (let i = 0; i <= 125; i++) { //ground
@@ -180,6 +182,34 @@ for (let i = 1; i <= 20; i++) { //wall start
             width:60,height:60,
             img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
         })}
+
+for (let i = 0; i <= 125; i++) { //ground
+    if((i == 12) || (i == 122) || (i == 52) || (i==68)){
+        MainGame.NewEntity({
+            name: 'cloud'+i*60, 
+            x: i*60,y:MainGame.Canvas.height-650,
+            width:100,height:100,
+            img: "assets/img/cloud.png"
+        })
+    }
+    if ((i == 28) || (i == 98) || (i == 52) || (i==79)){
+        MainGame.NewEntity({
+            name: 'cloud'+i*60,
+            x: i*60,y:MainGame.Canvas.height-800,
+            width:100,height:100,
+            img: "assets/img/cloud.png" 
+        }) 
+    }
+    if ((i == 38) || (i == 98) || (i == 52) || (i==79)){
+        MainGame.NewEntity({
+            name: 'cloud'+i*60,
+            x: i*60,y:MainGame.Canvas.height-725,
+            width:100,height:100,
+            img: "assets/img/cloud.png" 
+        }) 
+    }
+
+}
 
 
 animate()

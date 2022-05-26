@@ -1,11 +1,8 @@
-documentation:
-landing page (choose level (bam bird or super mario))
-html explain how the engine works
-
-game-examples:
-build a level for super mario 
-- faire api go (store scoreboard in db (mongodb ?))
-- ajouter du lore dans mario (princesse a sauver..-)
+ORDER OF IMPORTANCE:
+- splash page get username before playing (to give to db)
+- add a timer to the game and handle the score with the timer and pieces 
+- ajouter du lore dans mario (princesse a sauver..)
 - faire plusieurs niveaux mario
 
+finir documentation
 flappy bird
