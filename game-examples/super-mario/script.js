@@ -1,4 +1,5 @@
 import Game from "../../NaluosEngine/Game.js"
+import Player from "../../NaluosEngine/src/Player.js"
 import map from "./map.js"
 
 var MainGame = new Game({ //create game
@@ -21,7 +22,7 @@ var Player1 = MainGame.NewPlayer({ // create player
 })
 
 Player1.AssignMovementEvent({
-    input: "d", movement:"right", speed: 6, 
+    input: "d", movement:"right", speed: 15, 
     animationImagePath: "assets/img/mario-movement.png"
     ,frames: [0,2],speedAnimation: 8
 })
@@ -68,16 +69,23 @@ MainGame.playSoundOf({ // play sound
 
 var Monster = MainGame.NewEnemy({ // add goomba
     name: "Goomba",
-    x:250,y:200,
+    x:250,y:60,
     width:40,height:40, 
     img: "./assets/img/goomba.png" 
 })
 Monster.isAEntity = false
 MainGame.NewEntity({ // add piece
     name: "Piece",
-    x:100,y:10,
+    x:700,y:101,
     width:40,height:40, 
     img: "./assets/img/piece.png"
+})
+
+var champi = MainGame.NewEntity({ // add piece
+    name: "Champi",
+    x:250,y:101,
+    width:80,height:80, 
+    img: "./assets/img/champi.jpeg"
 })
 
 var isRunning = true 
@@ -93,7 +101,7 @@ document.addEventListener('keydown', function(event){ //pause game
 });
 
 Player1.LevelOfGravity(0.4)
-Monster.teleport(150,300)
+Monster.teleport(700,101)
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
@@ -106,27 +114,36 @@ function animate(){ // animate game
         Player1.setCollision(true)
         Monster.setCollision(true)
         Monster.setInfiteMovementX({count: 100})
-        Monster.setInfiteMovementY({count: 50})
+        // Monster.setInfiteMovementY({count: 50})
 
         //lose game
         if(Player1.y >= MainGame.Canvas.height + 100){
-            //MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
+            MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             Player1.teleport(0,200)
-            postscore()
-            getscore()
         }
         if (timer == 0) { // if timer is 0, stop game
             stopAnimate(handleGame)
         }
 
-        //if player touches the endflag of the map (win game)
-        console.log(username)
+        if (Player1.x>=Monster.x-40 && Player1.x<=Monster.x+Monster.width && Math.floor(Player1.y)>=Monster.y-20 && Math.floor(Player1.y)<=Monster.y+Monster.height-20) { // if collision with goomba
+            Player1.teleport(0,200)
+            Monster.teleport(700,101)
+            MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
+        }
+
+        if (Player1.x >= endflag.x-100 && Player1.x <= endflag.x+100) { // if collision with endflag
+            stopAnimate(handleGame)
+            postscore()
+            getscore()
+        }
+
     } else {
         console.log('paused game menu')
     }
 
 }
 var timer = 1;
+var score = 0;
 function startTimer(duration) {
     var display = document.querySelector('#time');
     timer = duration;
@@ -157,7 +174,8 @@ function getscore() {
 }
 
 async function postscore() {
-    let data = {Username: "NagibLOL", Score: 10};
+    console.log(username, score)
+    let data = {Username: username, Score: score};
 
     fetch("http://127.0.0.1:8080/scorePOST", {
       method: "POST",
@@ -240,7 +258,7 @@ for (let i = 0; i <= 125; i++) { //ground
 
 }
 
-MainGame.NewEntity({
+var endflag = MainGame.NewEntity({
     name: "endflag",
     x: 6800,y:MainGame.Canvas.height-650,
     width: 125, height: 600,
