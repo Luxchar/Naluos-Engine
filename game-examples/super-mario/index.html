@@ -42,5 +42,18 @@
         </div>
 
     </body>
-    <script src="./script.js" type="module"></script>
+    <!-- <script src="./script.js" type="module"></script> -->
+    <script>
+        //get username
+        let username = prompt("Please enter your name");
+        while (username == null || username == "") {
+            username = prompt("Please enter your name");
+        }
+        // load the game
+        let myScript = document.createElement("script");
+        myScript.setAttribute("type", "module");
+        myScript.setAttribute("src", "./script.js");
+        document.body.appendChild(myScript);
+
+    </script>
 </html>

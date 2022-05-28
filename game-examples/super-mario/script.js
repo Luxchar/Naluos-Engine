@@ -21,7 +21,7 @@ var Player1 = MainGame.NewPlayer({ // create player
 })
 
 Player1.AssignMovementEvent({
-    input: "d", movement:"right", speed: 25, 
+    input: "d", movement:"right", speed: 6, 
     animationImagePath: "assets/img/mario-movement.png"
     ,frames: [0,2],speedAnimation: 8
 })
@@ -118,12 +118,9 @@ function animate(){ // animate game
         if (timer == 0) { // if timer is 0, stop game
             stopAnimate(handleGame)
         }
-        //if player touches the endflag of the map
-        if(Player1.x >= MainGame.Canvas.width - Player1.width){
-            stopAnimate(handleGame)
-            postscore()
-            getscore()
-        }
+
+        //if player touches the endflag of the map (win game)
+        console.log(username)
     } else {
         console.log('paused game menu')
     }
@@ -148,6 +145,7 @@ function startTimer(duration) {
 
 window.onload = function () {
     startTimer(60 * 6-1);
+    // Player1.teleport(6200,200)
 };
 
 function getscore() {
@@ -244,15 +242,15 @@ for (let i = 0; i <= 125; i++) { //ground
 
 MainGame.NewEntity({
     name: "endflag",
-    x: 6500,y:MainGame.Canvas.height-550,
-    width: 500, height: 500,
+    x: 6800,y:MainGame.Canvas.height-650,
+    width: 125, height: 600,
     img: "./assets/img/endflag.jpeg"
 })
 
 MainGame.NewEntity({
     name: "peach",
-    x: 7150,y:MainGame.Canvas.height-150,
-    width: 100, height: 100,
+    x: 7150,y:MainGame.Canvas.height-175,
+    width: 100, height: 125,
     img: "./assets/img/peach.jpeg"
 })
 

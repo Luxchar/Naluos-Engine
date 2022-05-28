@@ -76,7 +76,7 @@ export default class Entity{ //load entity with parameters
         this.map.set(this.name, this)
     }
 
-    setCollision({bool = true, position = { top : { break : true, collision : true }, right: { break: false, collision: true} ,buttom : { break: false, collision: true }, left: {break: false, collision: true}} }){
+    setCollision({bool = true, position = { top : { break : true, collision : true }, right: { break: false, collision: true} ,bottom : { break: false, collision: true }, left: {break: false, collision: true}} }){
         if(bool){
             this.map.forEach(e => {
                 if(e.isEntity){
@@ -86,7 +86,7 @@ export default class Entity{ //load entity with parameters
                             if(position.top.break) this.map.delete(e.name)
                         }     
                     }
-                    if(position.buttom.collision){
+                    if(position.bottom.collision){
                         if(this.y + this.height <= e.y && this.y + this.height + this.velocity.y >= e.y && this.x + this.width >= e.x && this.x <= e.x + e.width) {
                             this.velocity.y = 0, this.hasJumped = true
                         }

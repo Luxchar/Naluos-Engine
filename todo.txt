@@ -1,12 +1,14 @@
 ORDER OF IMPORTANCE:
-- splash page get username before playing (to give to db)
-- handle the score with the timer and pieces when win
-- add endgame flag to the game
-- interaction princesse a la fin du jeu/ texte histoire au debut "aller sauver princesse ou quoi"
+- add endgame flag to the game / handle the score with the timer and pieces when win
+- interaction princesse a la fin du jeu/ texte histoire au debut "aller sauver princesse ou quoi" (image dit a mario de se bouger au début ?)
 - faire plusieurs niveaux mario (monde souterrain ?)
 - goomba move normally
+- goomba death on collision
 - champignon to change the sprite to big mario
+- pause menu ils demandent des features mais je sais plus quoi (et y integrer le scoreboard)
+
 - animation speed of entity link property
+- splash page get username before playing make it nicer ?
 
 finir documentation
 finir page d'accueil engine
