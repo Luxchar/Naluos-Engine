@@ -47,6 +47,12 @@ export default class Game{
         return null
     }
 
+    updateEntities(){
+        this.Entities.forEach(element => {
+            element.update()
+        });
+    }
+
     ClearCanvas(){
         this.Context.clearRect(0, 0, this.Canvas.width, this.Canvas.height);
     }

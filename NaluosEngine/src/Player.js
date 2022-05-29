@@ -75,7 +75,6 @@ export default class Player extends Entity{
             if (e.key == input && movement == "left") this.velocity.x = 0, this.keys.hasPressedLeft = false, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
             if (e.key == " " && movement == "jump") this.velocity.y -= 0, this.img = this.SetImgSprite(animationImagePath, undefined, undefined, movement)
         }, true);
-
         this.map.set(obj.name, obj)
     }
 
@@ -103,6 +102,7 @@ export default class Player extends Entity{
     }
     
     updateMouvement(){
+        this.oldPosition.x = this.x
         this.x += this.velocity.x
         this.map.set(this.name, this)
     }

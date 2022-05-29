@@ -1,4 +1,5 @@
 import Game from "../../NaluosEngine/Game.js"
+import Entity from "../../NaluosEngine/src/Entity.js"
 import Player from "../../NaluosEngine/src/Player.js"
 import map from "./map.js"
 
@@ -22,7 +23,7 @@ var Player1 = MainGame.NewPlayer({ // create player
 })
 
 Player1.AssignMovementEvent({
-    input: "d", movement:"right", speed: 15, 
+    input: "d", movement:"right", speed: 8, 
     animationImagePath: "assets/img/mario-movement.png"
     ,frames: [0,2],speedAnimation: 8
 })
@@ -73,7 +74,7 @@ var Monster = MainGame.NewEnemy({ // add goomba
     width:40,height:40, 
     img: "./assets/img/goomba.png" 
 })
-Monster.isAEntity = false
+
 MainGame.NewEntity({ // add piece
     name: "Piece",
     x:700,y:101,
@@ -81,7 +82,7 @@ MainGame.NewEntity({ // add piece
     img: "./assets/img/piece.png"
 })
 
-var champi = MainGame.NewEntity({ // add piece
+var champi = MainGame.NewEntity({ // add champi
     name: "Champi",
     x:250,y:101,
     width:80,height:80, 
@@ -102,11 +103,13 @@ document.addEventListener('keydown', function(event){ //pause game
 
 Player1.LevelOfGravity(0.4)
 Monster.teleport(700,101)
+Monster.teleport(900,101)
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
         MainGame.ClearCanvas() // clear canvas to show next frame
         MainGame.Draw() // draw sprites of the entities
+        MainGame.updateEntities()
         Player1.updateMouvement()
         MainGame.DrawMap(map, MapDefine)
         Player1.setFocus()
@@ -114,7 +117,6 @@ function animate(){ // animate game
         Player1.setCollision(true)
         Monster.setCollision(true)
         Monster.setInfiteMovementX({count: 100})
-        // Monster.setInfiteMovementY({count: 50})
 
         //lose game
         if(Player1.y >= MainGame.Canvas.height + 100){
@@ -124,24 +126,23 @@ function animate(){ // animate game
         if (timer == 0) { // if timer is 0, stop game
             stopAnimate(handleGame)
         }
-
+        if(Monster.checkCollisionTop({object: Player1})) MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false}) && Monster.delete()
         if (Player1.x>=Monster.x-40 && Player1.x<=Monster.x+Monster.width && Math.floor(Player1.y)>=Monster.y-20 && Math.floor(Player1.y)<=Monster.y+Monster.height-20) { // if collision with goomba
             Player1.teleport(0,200)
-            Monster.teleport(700,101)
             MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
         }
-
         if (Player1.x >= endflag.x-100 && Player1.x <= endflag.x+100) { // if collision with endflag
             stopAnimate(handleGame)
             postscore()
             getscore()
         }
 
+        document.getElementById("game-container").style.opacity = "1" 
     } else {
-        console.log('paused game menu')
+        document.getElementById("game-container").style.opacity = "0.5"
     }
-
 }
+
 var timer = 1;
 var score = 0;
 function startTimer(duration) {
@@ -209,6 +210,7 @@ for (let index = 1; index <= 120; index++) {
 }
 }
 
+
 for (let i = 0; i <= 125; i++) { //ground
     if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) ){
 
@@ -271,7 +273,6 @@ MainGame.NewEntity({
     width: 100, height: 125,
     img: "./assets/img/peach.jpeg"
 })
-
 
 
 animate()

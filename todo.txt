@@ -1,10 +1,10 @@
 ORDER OF IMPORTANCE:
 - interaction princesse a la fin du jeu/ texte histoire au debut "aller sauver princesse ou quoi" (image dit a mario de se bouger au début ?)
 - faire plusieurs niveaux mario (monde souterrain ?)
-- champignon to change the sprite to big mario
-- pause menu ils demandent des features mais je sais plus quoi (et y integrer le scoreboard)
-- goomba kill
+- afficher scoreboard
 
+- number of lives (show it) ?
+- champignon to change the sprite to big mario
 - endgame flag disable collision
 - animation speed of entity link property
 - splash page get username before playing make it nicer ?

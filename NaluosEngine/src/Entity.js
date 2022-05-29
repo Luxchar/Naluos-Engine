@@ -11,6 +11,9 @@ export default class Entity{ //load entity with parameters
         this.save = {
             x, y,
         }
+        this.oldPosition = {
+            x,y,
+        }
         this.velocity = {
             gravity: 0.5,
             x: 0,
@@ -65,7 +68,10 @@ export default class Entity{ //load entity with parameters
 
     setGravity({bool = true}){
         if(bool){
-            if (this.y + this.height + this.velocity.y <= this.Canvas.height*2) this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
+            if (this.y + this.height + this.velocity.y <= this.Canvas.height*2){
+                this.oldPosition.y = this.y
+                this.y += this.velocity.y, this.velocity.y += this.velocity.gravity
+            }
         }
         this.map.set(this.name, this)
     }
@@ -108,5 +114,23 @@ export default class Entity{ //load entity with parameters
                 }
             });
         }
+    }
+
+    update(){
+        this.map.set(this.name, this)
+    }
+
+    checkCollisionTop({object}){
+        if(object.oldPosition.y <  Math.floor(this.y - this.height) && object.y > Math.floor(this.y - this.height) && object.x >= this.x - this.width && object.x <= this.x + this.width){
+            this.teleport(0,-100)
+            this.map.delete(this.name)
+            return true
+        }
+        return false
+    }
+
+    delete(){
+        this.map.delete(this.name)
+        delete this
     }
 }
