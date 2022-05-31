@@ -2,10 +2,13 @@ import Entity from './Entity.js';
 
 export default class Enemy extends Entity{ //load entity with parameters
     constructor({Canvas, Context, name, x = 0, y = 0, width = 800, height = 600, img = "Rectangle", sounds, sprite = null, map}) {
-        super({Canvas, Context, x, y, width, height, img, sounds, sprite, map});
+        super({Canvas, Context, name, x, y, width, height, img, sounds, sprite, map});
         
         this.isAEntity = false
         this.isMonster = true
+        this.save = {
+            x, y
+        }
         this.velocity = {
             gravity: 0.5,
             x: 0,
@@ -38,5 +41,14 @@ export default class Enemy extends Entity{ //load entity with parameters
         this.movements.countY += this.movements.incrementY  
         this.y += this.movements.incrementY
         this.map.set(this.name, this)
+    }
+
+    reset(){
+        this.teleport(this.save.x, this.save.y)
+        this.movements = {
+            countX: 0, incrementX: 1, countY: 0, incrementY: 1,
+        }
+        this.map.set(this.name, this)
+        console.log(this.save.x, this.save.y)
     }
 }

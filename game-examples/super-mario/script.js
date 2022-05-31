@@ -1,6 +1,4 @@
 import Game from "../../NaluosEngine/Game.js"
-import Entity from "../../NaluosEngine/src/Entity.js"
-import Player from "../../NaluosEngine/src/Player.js"
 import map from "./map.js"
 
 var MainGame = new Game({ //create game
@@ -50,7 +48,8 @@ var Void = MainGame.NewEntity({ // create void
 })
 
 var MapDefine = new Map([ // define map properties
-    [0, Sky]
+    [0, Sky],
+    [1, Void]
 ]) //define map properties
 
 MainGame.addSound({ // import sound
@@ -76,7 +75,7 @@ MainGame.playSoundOf({ // play sound
 
 var Monster = MainGame.NewEnemy({ // add goomba
     name: "Goomba",
-    x:900,y:101,
+    x:3000,y:101,
     width:40,height:40, 
     img: "./assets/img/goomba.png" 
 })
@@ -88,7 +87,35 @@ var Monster2 = MainGame.NewEnemy({ // add goomba
     img: "./assets/img/goomba.png" 
 })
 
-var arrMonster = [Monster]
+var Monster3 = MainGame.NewEnemy({ // add goomba
+    name: "Goomba3",
+    x:5000,y:101,
+    width:40,height:40, 
+    img: "./assets/img/goomba.png" 
+})
+
+var Monster5 = MainGame.NewEnemy({ // add goomba
+    name: "Goomba5",
+    x:5700,y:101,
+    width:40,height:40, 
+    img: "./assets/img/goomba.png" 
+})
+
+var Monster4 = MainGame.NewEnemy({ // add goomba
+    name: "Goomba4",
+    x:10000,y:101,
+    width:40,height:40, 
+    img: "./assets/img/goomba.png" 
+})
+
+var Monster6 = MainGame.NewEnemy({ // add goomba
+    name: "Goomba6",
+    x:8500,y:101,
+    width:40,height:40, 
+    img: "./assets/img/goomba.png" 
+})
+
+var arrMonster = [Monster, Monster2, Monster3, Monster4, Monster5, Monster6]
 
 // MainGame.NewEntity({ // add piece
 //     name: "Piece",
@@ -98,6 +125,7 @@ var arrMonster = [Monster]
 // })
 
 var isRunning = true 
+
 document.addEventListener('keydown', function(event){ //pause game
     if(event.key === "Escape"){
         if (isRunning) {
@@ -110,13 +138,15 @@ document.addEventListener('keydown', function(event){ //pause game
 });
 
 Player1.LevelOfGravity(0.4)
+var maplevel = map[0]
+
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
         MainGame.ClearCanvas() // clear canvas to show next frame
         MainGame.Draw() // draw sprites of the entities
         MainGame.updateEntities()
-        MainGame.DrawMap(map, MapDefine)
+        MainGame.DrawMap(maplevel, MapDefine)
 
         Player1.updateMouvement()
         Player1.setFocus()
@@ -124,38 +154,35 @@ function animate(){ // animate game
         Player1.setCollision(true)
 
         for (var i = 0; i < arrMonster.length; i++) {
-            console.log(arrMonster[i].x)
             arrMonster[i].setCollision(true)
             arrMonster[i].setInfiniteMovementX({count: 100})
         }
 
-        // Monster2.setCollision(true)
-        // Monster2.setInfiniteMovementX({count: 100})
-
-        //lose game
-        if(Player1.y >= MainGame.Canvas.height + 100){
-            MapDefine = new Map([ // define map properties
-            [0, Sky]
-        ])
-            MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
+        if(Player1.y >= MainGame.Canvas.height + 100){ //lose game
+            maplevel = map[0]
             Player1.teleport(0,200)
+            for (var i = 0; i < arrMonster.length; i++) {
+                arrMonster[i].reset()
+            } 
         }
+
         if (timer == 0) { // if timer is 0, stop game
-            MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             stopAnimate(handleGame)
         }
-        if(Monster.checkCollisionTop({object: Player1})) MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false}) && Monster.delete(), score+=10, document.getElementById("score").innerHTML = score
-        if (Player1.x>=Monster.x-40 && Player1.x<=Monster.x+Monster.width && Math.floor(Player1.y)>=Monster.y-20 && Math.floor(Player1.y)<=Monster.y+Monster.height-20) { // if collision with goomba
-            MapDefine = new Map([ // define map properties
-            [0, Sky]
-        ])
-            Player1.teleport(0,200)
-            MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
+
+        for (var i = 0; i < arrMonster.length; i++) { // check collision with player and monsters
+            if(arrMonster[i].checkCollisionTop({object: Player1})) arrMonster[i].delete(), score+=10, document.getElementById("score").innerHTML = score
+                if (Player1.x>=arrMonster[i].x-40 && Player1.x<=arrMonster[i].x+arrMonster[i].width && Math.floor(Player1.y)>=arrMonster[i].y-20 && Math.floor(Player1.y)<=arrMonster[i].y+arrMonster[i].height-20) { // if collision with goomba
+                maplevel = map[0]
+                Player1.teleport(0,200)
+                for (var i = 0; i < arrMonster.length; i++) {
+                    arrMonster[i].reset()
+                } 
+            }
         }
+        
         if (Player1.x >= endflag.x-100 && Player1.x <= endflag.x+100) { // if collision with endflag
-            MapDefine = new Map([ // define map properties
-                [0, Void]
-            ])
+            maplevel = map[1]
             Player1.teleport(9500,200)
         }
         if (Player1.x >= endflag2.x-100 && Player1.x <= endflag2.x+100) { // if collision with endflag2 
@@ -234,14 +261,14 @@ for (let index = 1; index <= 120; index++) {
             x: 1600+index*60, y: MainGame.Canvas.height - 300,
             width: 60, height: 60,
             img: "./assets/img/block.png"
-        })
+            })
+         }
     }
-}
 }
 
 
 for (let i = 0; i <= 250; i++) { //ground
-    if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) || (i>125 && i<156)){
+    if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) || (i>125 && i<156) || (i>169 && i<173) || (i>209 && i<213) || (i>222 && i<226)){
 
     } else {
         if (i>155) {
@@ -256,21 +283,39 @@ for (let i = 0; i <= 250; i++) { //ground
             name: i*60,
             x: i*60,y:MainGame.Canvas.height-60,
             width:60,height:60,
-            img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
+            img: "./assets/img/block.png" 
         }) 
     }
     }
+}
+
+for (let i=0; i<=4; i++){ 
+    MainGame.NewEntity({
+        name: i*69,
+        x: 4740,y:MainGame.Canvas.height-60*i,
+        width:60,height:60,
+        img: "./assets/img/block.png" 
+    })  
 }
 
 for (let i=0; i<=5; i++){
     for (let j=0; j<i; j++){
         MainGame.NewEntity({
             name: i*61*j,
-            x: 100+i*60,y:MainGame.Canvas.height-j*60-60,
+            x: 2500+i*60,y:MainGame.Canvas.height-j*60-60,
             width:60,height:60,
             img: "./assets/img/block.png" 
         })  
     }
+}
+
+for (let i=0; i<=2; i++){ 
+    MainGame.NewEntity({
+        name: i*63,
+        x: 3800+i*60,y:MainGame.Canvas.height-320,
+        width:60,height:60,
+        img: "./assets/img/block.png" 
+    })  
 }
 
 
@@ -293,51 +338,68 @@ for (let i = 1; i <= 20; i++) { //wall start
 for (let i = 0; i <= 125; i++) { //ground
     if((i == 12) || (i == 122) || (i == 52) || (i==68)){
         MainGame.NewEntity({
-            name: 'cloud'+i*60, 
+            name: 'cloud'+i, 
             x: i*60,y:MainGame.Canvas.height-650,
             width:100,height:100,
             img: "assets/img/cloud.png"
         })
     }
-    if ((i == 28) || (i == 98) || (i == 52) || (i==79)){
-        MainGame.NewEntity({
-            name: 'cloud'+i*60,
-            x: i*60,y:MainGame.Canvas.height-800,
-            width:100,height:100,
-            img: "assets/img/cloud.png" 
-        }) 
-    }
-    if ((i == 38) || (i == 98) || (i == 52) || (i==79)){
-        MainGame.NewEntity({
-            name: 'cloud'+i*60,
-            x: i*60,y:MainGame.Canvas.height-725,
-            width:100,height:100,
-            img: "assets/img/cloud.png" 
-        }) 
-    }
-
 }
 
 var endflag = MainGame.NewEntity({
     name: "endflag",
     x: 6800,y:MainGame.Canvas.height-650,
-    width: 125, height: 600,
-    img: "./assets/img/endflag.jpeg"
+    width: 100, height: 600,
+    img: "./assets/img/endflag.png"
 })
 
 
-var endflag2 = MainGame.NewEntity({
-    name: "endflag2",
-    x: 15000,y:MainGame.Canvas.height-650,
-    width: 125, height: 600,
-    img: "./assets/img/endflag.jpeg"
-})
 
 MainGame.NewEntity({
     name: "peach",
     x: 7150,y:MainGame.Canvas.height-175,
     width: 100, height: 125,
-    img: "./assets/img/peach.jpeg"
+    img: "./assets/img/peach.png"
+})
+
+//world 2
+
+for (let i=0; i<=5; i++){
+    for (let j=0; j<i; j++){
+        MainGame.NewEntity({
+            name: i*71*j,
+            x: 10500+i*60,y:MainGame.Canvas.height-j*60-60,
+            width:60,height:60,
+            img: "./assets/img/under-block.png" 
+        })  
+    }
+}
+
+for (let index = 1; index <= 120; index++) {
+    if ((index == 2) || (index == 61)){
+        MainGame.NewEntity({
+            name: "Objetunder" + index,
+            x: 12000+index*60, y: MainGame.Canvas.height - 300,
+            width: 60, height: 60,
+            img: "./assets/img/block_interrogation_mark.jpg"
+        })
+    } 
+    if ((index == 3) || (index == 1) || (index == 60) || (index == 62)){ {    
+        MainGame.NewEntity({
+            name: "Objetunder" + index,
+            x: 12000+index*60, y: MainGame.Canvas.height - 300,
+            width: 60, height: 60,
+            img: "./assets/img/block.png"
+            })
+         }
+    }
+}
+
+var endflag2 = MainGame.NewEntity({
+    name: "endflag2",
+    x: 14000,y:MainGame.Canvas.height-650,
+    width: 125, height: 600,
+    img: "./assets/img/endflag.png"
 })
 
 
