@@ -76,10 +76,19 @@ MainGame.playSoundOf({ // play sound
 
 var Monster = MainGame.NewEnemy({ // add goomba
     name: "Goomba",
-    x:250,y:60,
+    x:900,y:101,
     width:40,height:40, 
     img: "./assets/img/goomba.png" 
 })
+
+var Monster2 = MainGame.NewEnemy({ // add goomba
+    name: "Goomba2",
+    x:1500,y:101,
+    width:40,height:40, 
+    img: "./assets/img/goomba.png" 
+})
+
+var arrMonster = [Monster]
 
 // MainGame.NewEntity({ // add piece
 //     name: "Piece",
@@ -101,24 +110,33 @@ document.addEventListener('keydown', function(event){ //pause game
 });
 
 Player1.LevelOfGravity(0.4)
-Monster.teleport(700,101)
-Monster.teleport(900,101)
 function animate(){ // animate game
     if (isRunning) {
         var handleGame = window.requestAnimationFrame(animate)
         MainGame.ClearCanvas() // clear canvas to show next frame
         MainGame.Draw() // draw sprites of the entities
         MainGame.updateEntities()
-        Player1.updateMouvement()
         MainGame.DrawMap(map, MapDefine)
+
+        Player1.updateMouvement()
         Player1.setFocus()
         Player1.setGravity(true)
         Player1.setCollision(true)
-        Monster.setCollision(true)
-        Monster.setInfiteMovementX({count: 100})
+
+        for (var i = 0; i < arrMonster.length; i++) {
+            console.log(arrMonster[i].x)
+            arrMonster[i].setCollision(true)
+            arrMonster[i].setInfiniteMovementX({count: 100})
+        }
+
+        // Monster2.setCollision(true)
+        // Monster2.setInfiniteMovementX({count: 100})
 
         //lose game
         if(Player1.y >= MainGame.Canvas.height + 100){
+            MapDefine = new Map([ // define map properties
+            [0, Sky]
+        ])
             MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             Player1.teleport(0,200)
         }
@@ -128,6 +146,9 @@ function animate(){ // animate game
         }
         if(Monster.checkCollisionTop({object: Player1})) MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false}) && Monster.delete(), score+=10, document.getElementById("score").innerHTML = score
         if (Player1.x>=Monster.x-40 && Player1.x<=Monster.x+Monster.width && Math.floor(Player1.y)>=Monster.y-20 && Math.floor(Player1.y)<=Monster.y+Monster.height-20) { // if collision with goomba
+            MapDefine = new Map([ // define map properties
+            [0, Sky]
+        ])
             Player1.teleport(0,200)
             MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
         }
@@ -222,14 +243,15 @@ for (let index = 1; index <= 120; index++) {
 for (let i = 0; i <= 250; i++) { //ground
     if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) || (i>125 && i<156)){
 
-    } else if (i>155) {
-        MainGame.NewEntity({
-            name: i*60,
-            x: i*60, y: MainGame.Canvas.height - 60,
-            width: 60, height: 60,
-            img: "./assets/img/under-block.png"
-        })
     } else {
+        if (i>155) {
+            MainGame.NewEntity({
+                name: i*60,
+                x: i*60, y: MainGame.Canvas.height - 60,
+                width: 60, height: 60,
+                img: "./assets/img/under-block.png"
+            })
+        } else {
         MainGame.NewEntity({
             name: i*60,
             x: i*60,y:MainGame.Canvas.height-60,
@@ -237,7 +259,20 @@ for (let i = 0; i <= 250; i++) { //ground
             img: "https://preview.redd.it/dblx5qhqm0l61.jpg?auto=webp&s=44e8c2c4cda0cd22578d322133f5dd77cb3440f7" 
         }) 
     }
+    }
 }
+
+for (let i=0; i<=5; i++){
+    for (let j=0; j<i; j++){
+        MainGame.NewEntity({
+            name: i*61*j,
+            x: 100+i*60,y:MainGame.Canvas.height-j*60-60,
+            width:60,height:60,
+            img: "./assets/img/block.png" 
+        })  
+    }
+}
+
 
 for (let i = 1; i <= 20; i++) { //wall start
         MainGame.NewEntity({
@@ -249,10 +284,10 @@ for (let i = 1; i <= 20; i++) { //wall start
 
 for (let i = 1; i <= 20; i++) { //wall start
     MainGame.NewEntity({
-        name: 'block'+i,
-        x: 156*60,y:MainGame.Canvas.height-(60*i),
+        name: 'block2'+i,
+        x: 60*156,y:MainGame.Canvas.height-(60*i),
         width:60,height:60,
-        img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
+        img: "./assets/img/black.png" 
     })}
 
 for (let i = 0; i <= 125; i++) { //ground
@@ -293,7 +328,7 @@ var endflag = MainGame.NewEntity({
 
 var endflag2 = MainGame.NewEntity({
     name: "endflag2",
-    x: 12500,y:MainGame.Canvas.height-650,
+    x: 15000,y:MainGame.Canvas.height-650,
     width: 125, height: 600,
     img: "./assets/img/endflag.jpeg"
 })

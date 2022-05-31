@@ -21,9 +21,10 @@ export default class Enemy extends Entity{ //load entity with parameters
         else this.img = this.SetImgSprite(img)
         if (this.sprite != null) this.hasSprite = true
         else this.hasSprite = false
+        this.teleport(x, y)
     }
 
-    setInfiteMovementX({count}){
+    setInfiniteMovementX({count}){
         if(this.movements.countX >= count) this.movements.incrementX = -1
         if(this.movements.countX <= -count) this.movements.incrementX = 1
         this.movements.countX += this.movements.incrementX
@@ -31,7 +32,7 @@ export default class Enemy extends Entity{ //load entity with parameters
         this.map.set(this.name, this)
     }
     
-    setInfiteMovementY({count}){
+    setInfiniteMovementY({count}){
         if(this.movements.countY >= count) this.movements.incrementY = -1
         if(this.movements.countY <= -count) this.movements.incrementY = 1
         this.movements.countY += this.movements.incrementY  

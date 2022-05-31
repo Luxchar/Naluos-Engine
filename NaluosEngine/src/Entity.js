@@ -78,7 +78,7 @@ export default class Entity{ //load entity with parameters
 
     teleport(tpX,tpY){
         this.x = tpX
-        this.y = this.Canvas.height - tpY
+        this.y =  this.Canvas.height - tpY
         this.map.set(this.name, this)
     }
 
