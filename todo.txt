@@ -3,7 +3,6 @@ ORDER OF IMPORTANCE:
 - faire plusieurs niveaux mario (monde souterrain ?)
 - afficher scoreboard
 
-- number of lives (show it) ?
 - champignon to change the sprite to big mario
 - endgame flag disable collision
 - animation speed of entity link property

@@ -75,19 +75,12 @@ var Monster = MainGame.NewEnemy({ // add goomba
     img: "./assets/img/goomba.png" 
 })
 
-MainGame.NewEntity({ // add piece
-    name: "Piece",
-    x:700,y:101,
-    width:40,height:40, 
-    img: "./assets/img/piece.png"
-})
-
-var champi = MainGame.NewEntity({ // add champi
-    name: "Champi",
-    x:250,y:101,
-    width:80,height:80, 
-    img: "./assets/img/champi.jpeg"
-})
+// MainGame.NewEntity({ // add piece
+//     name: "Piece",
+//     x:700,y:101,
+//     width:40,height:40, 
+//     img: "./assets/img/piece.png"
+// })
 
 var isRunning = true 
 document.addEventListener('keydown', function(event){ //pause game
@@ -124,17 +117,21 @@ function animate(){ // animate game
             Player1.teleport(0,200)
         }
         if (timer == 0) { // if timer is 0, stop game
+            MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
             stopAnimate(handleGame)
         }
-        if(Monster.checkCollisionTop({object: Player1})) MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false}) && Monster.delete()
+        if(Monster.checkCollisionTop({object: Player1})) MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false}) && Monster.delete(), score+=10, document.getElementById("score").innerHTML = score
         if (Player1.x>=Monster.x-40 && Player1.x<=Monster.x+Monster.width && Math.floor(Player1.y)>=Monster.y-20 && Math.floor(Player1.y)<=Monster.y+Monster.height-20) { // if collision with goomba
             Player1.teleport(0,200)
             MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
         }
         if (Player1.x >= endflag.x-100 && Player1.x <= endflag.x+100) { // if collision with endflag
             stopAnimate(handleGame)
+            score+= timer
+            timer = 0
             postscore()
             getscore()
+            Player1.teleport(200,8500)
         }
 
         document.getElementById("game-container").style.opacity = "1" 
