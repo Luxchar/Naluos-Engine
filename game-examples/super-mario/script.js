@@ -43,6 +43,12 @@ var Sky = MainGame.NewEntity({ // import sky model
     img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
 })
 
+var Void = MainGame.NewEntity({ // create void
+    x:0,y:0,
+    width:100,height:100,
+    img: "assets/img/black.png"
+})
+
 var MapDefine = new Map([ // define map properties
     [0, Sky]
 ]) //define map properties
@@ -126,14 +132,19 @@ function animate(){ // animate game
             MainGame.playSoundOf({name: "DeathSound", volume: 0.2, loop: false})
         }
         if (Player1.x >= endflag.x-100 && Player1.x <= endflag.x+100) { // if collision with endflag
+            MapDefine = new Map([ // define map properties
+                [0, Void]
+            ])
+            Player1.teleport(9500,200)
+        }
+        if (Player1.x >= endflag2.x-100 && Player1.x <= endflag2.x+100) { // if collision with endflag2 
             stopAnimate(handleGame)
             score+= timer
             timer = 0
             postscore()
             getscore()
-            Player1.teleport(200,8500)
+            alert("You Win! Your score is " + score)
         }
-
         document.getElementById("game-container").style.opacity = "1" 
     } else {
         document.getElementById("game-container").style.opacity = "0.5"
@@ -208,9 +219,16 @@ for (let index = 1; index <= 120; index++) {
 }
 
 
-for (let i = 0; i <= 125; i++) { //ground
-    if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) ){
+for (let i = 0; i <= 250; i++) { //ground
+    if((i >= 18 && i <= 21) || (i >= 37 && i <= 40) || (i >= 75 && i <= 78) || (i>125 && i<156)){
 
+    } else if (i>155) {
+        MainGame.NewEntity({
+            name: i*60,
+            x: i*60, y: MainGame.Canvas.height - 60,
+            width: 60, height: 60,
+            img: "./assets/img/under-block.png"
+        })
     } else {
         MainGame.NewEntity({
             name: i*60,
@@ -228,6 +246,14 @@ for (let i = 1; i <= 20; i++) { //wall start
             width:60,height:60,
             img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
         })}
+
+for (let i = 1; i <= 20; i++) { //wall start
+    MainGame.NewEntity({
+        name: 'block'+i,
+        x: 156*60,y:MainGame.Canvas.height-(60*i),
+        width:60,height:60,
+        img: "https://media.tarkett-image.com/large/TH_OMNISPORTS_SKY%20BLUE.jpg" 
+    })}
 
 for (let i = 0; i <= 125; i++) { //ground
     if((i == 12) || (i == 122) || (i == 52) || (i==68)){
@@ -260,6 +286,14 @@ for (let i = 0; i <= 125; i++) { //ground
 var endflag = MainGame.NewEntity({
     name: "endflag",
     x: 6800,y:MainGame.Canvas.height-650,
+    width: 125, height: 600,
+    img: "./assets/img/endflag.jpeg"
+})
+
+
+var endflag2 = MainGame.NewEntity({
+    name: "endflag2",
+    x: 12500,y:MainGame.Canvas.height-650,
     width: 125, height: 600,
     img: "./assets/img/endflag.jpeg"
 })
