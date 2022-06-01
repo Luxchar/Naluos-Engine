@@ -20,6 +20,18 @@ export default class Game{
         this.direction = ["right", "left", "up", "down"]
     }
 
+    get Height(){
+        return this.GameHeight
+    }
+
+    get Width(){
+        return this.GameWidth
+    }
+
+    get Name(){
+        return this.GameName
+    }
+
     get AllPlayers(){
         return this.Players
     }
@@ -132,45 +144,41 @@ export default class Game{
             if(e.isImage && !e.hasSprite){ // if the entity has an image and no sprite
                 this.Context.drawImage(e.img, e.x, e.y, e.width, e.height)
             } else if (e.isImage && e.hasSprite) { // if the entity has an image and a sprite
+                    if (this.AnimationSpeed == 8) this.AnimationSpeed = 0, this.frames++ // speed of the sprite frame
+                    if (e.animations.get("left")) { if (this.frames >= e.animations.get("left")[1]) this.frames = e.animations.get("left")[0]
+                    } else if (e.animations.get("right")) { if (this.frames >= e.animations.get("right")[1]) this.frames = e.animations.get("right")[0]
+                    } else if (e.animations.get("up")) { if (this.frames >= e.animations.get("up")[1]) this.frames = e.animations.get("up")[0]
+                    } else if (e.animations.get("down")) { if (this.frames >= e.animations.get("down")[1]) this.frames = e.animations.get("down")[0] }
 
-                // console.log(e.animations.get("left")[0] || e.animations.get("right")[0] || e.animations.get("up")[0] || e.animations.get("down")[0])
-
-                // if(this.frames == 2) this.frames = 0 // reset the frames
-                if (this.AnimationSpeed == 8) this.AnimationSpeed = 0, this.frames++ // speed of the sprite frame
-
-                if (e.animations.get("left")) {
-                    if (this.frames >= e.animations.get("left")[1]) {
-                        this.frames = e.animations.get("left")[0]
-                    }
-                } else if (e.animations.get("right")) {
-                    if (this.frames >= e.animations.get("right")[1]) {
-                        this.frames = e.animations.get("right")[0]
-                    }
-                } else if (e.animations.get("up")) {
-                    if (this.frames >= e.animations.get("up")[1]) {
-                        this.frames = e.animations.get("up")[0]
-                    }
-                } else if (e.animations.get("down")) {
-                    if (this.frames >= e.animations.get("down")[1]) {
-                        this.frames = e.animations.get("down")[0]
-                    }
-                }
-
-                // draw the sprite
-                
-                if (e.animations.get("jump") != undefined && e.animations.get("right") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,10,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("jump") != undefined && e.animations.get("left") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,20,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("jump") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,10,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("left") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("up") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,0,100,200, e.x, e.y, e.width, e.height)
-                } else if (e.animations.get("down") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
-                } else this.Context.drawImage(e.img,(e.img.width/6)*5,10,100,150, e.x, e.y, e.width, e.height)
-
+                    if (e.animations.get("jump") != undefined && e.animations.get("right") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,10,100,150, e.x, e.y, e.width, e.height)
+                    } else if (e.animations.get("jump") != undefined && e.animations.get("left") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,20,100,150, e.x, e.y, e.width, e.height)
+                    } else if (e.animations.get("jump") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,10,100,150, e.x, e.y, e.width, e.height)
+                    } else if (e.animations.get("right") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
+                    } else if (e.animations.get("left") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
+                    } else if (e.animations.get("up") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,0,100,200, e.x, e.y, e.width, e.height)
+                    } else if (e.animations.get("down") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
+                    } else this.Context.drawImage(e.img,(e.img.width/6)*5,10,100,150, e.x, e.y, e.width, e.height)
             } else {
                 this.Context.rect(e.x, e.y, e.width, e.height)
             }
             this.Context.fill()
+        });
+    }
+
+    resetAllEnemies(){
+        this.Entities.forEach(element => {
+            if(element.isMonster){
+                element.teleport(element.save.x, element.save.y)
+                element.movements = { countX: 0, incrementX: 1, countY: 0, incrementY: 1}
+            }
+        });
+    }
+
+    resetAllEntities(){
+        this.Entities.forEach(element => {
+            if(element.isAEntity){
+                element.teleport(element.save.x, element.save.y)
+            }
         });
     }
 
@@ -218,22 +226,5 @@ export default class Game{
             sounds: this.Sounds,
             map: this.Entities,
         })
-    }
-
-    resetAllEnemies(){
-        this.Entities.forEach(element => {
-            if(element.isMonster){
-                element.teleport(element.save.x, element.save.y)
-                element.movements = { countX: 0, incrementX: 1, countY: 0, incrementY: 1}
-            }
-        });
-    }
-
-    resetAllEntities(){
-        this.Entities.forEach(element => {
-            if(element.isAEntity){
-                element.teleport(element.save.x, element.save.y)
-            }
-        });
     }
 }

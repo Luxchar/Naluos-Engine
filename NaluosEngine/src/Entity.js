@@ -136,7 +136,7 @@ export default class Entity{ //load entity with parameters
 
     checkCollisionBottomList({objectList: objArray}){
         for (let index = 0; index < objArray.length; index++) {
-            if(this.x + objArray[index].width/2 >=  objArray[index].x && this.x <= objArray[index].x - objArray[index].width/2 + objArray[index].width && this.oldPosition.y - this.height  <= objArray[index].y + objArray[index].height && this.y + this.height >= objArray[index].y + objArray[index].height){
+            if(this.x + objArray[index].width/2 >=  objArray[index].x && this.x <= objArray[index].x - objArray[index].width/2 + objArray[index].width && this.oldPosition.y - this.height  <= objArray[index].y && this.y + this.height >= objArray[index].y){
                 return [true, objArray[index]]
             }
         }

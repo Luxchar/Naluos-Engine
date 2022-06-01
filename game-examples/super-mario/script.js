@@ -130,7 +130,6 @@ function animate(){ // animate game
         }
 
         var check = Player1.checkCollisionBottomList({objectList: arrMonster})
-        console.log(check[0])
         if(check[0]) score+=10, document.getElementById("score").innerHTML = score, check[1].teleport(-500, 0)
             if (Player1.checkCollisionFromInsideList({entityObjects: arrMonster})) { // if collision with goomba
                 maplevel = map[0]
