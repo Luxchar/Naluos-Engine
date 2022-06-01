@@ -72,50 +72,18 @@ MainGame.playSoundOf({ // play sound
     volume: 0.05
 })
 
-
-var Monster = MainGame.NewEnemy({ // add goomba
-    name: "Goomba",
-    x:3000,y:101,
-    width:40,height:40, 
-    img: "./assets/img/goomba.png" 
-})
-
-var Monster2 = MainGame.NewEnemy({ // add goomba
-    name: "Goomba2",
-    x:1500,y:101,
-    width:40,height:40, 
-    img: "./assets/img/goomba.png" 
-})
-
-var Monster3 = MainGame.NewEnemy({ // add goomba
-    name: "Goomba3",
-    x:5000,y:101,
-    width:40,height:40, 
-    img: "./assets/img/goomba.png" 
-})
-
-var Monster5 = MainGame.NewEnemy({ // add goomba
-    name: "Goomba5",
-    x:5700,y:101,
-    width:40,height:40, 
-    img: "./assets/img/goomba.png" 
-})
-
-var Monster4 = MainGame.NewEnemy({ // add goomba
-    name: "Goomba4",
-    x:10000,y:101,
-    width:40,height:40, 
-    img: "./assets/img/goomba.png" 
-})
-
-var Monster6 = MainGame.NewEnemy({ // add goomba
-    name: "Goomba6",
-    x:8500,y:101,
-    width:40,height:40, 
-    img: "./assets/img/goomba.png" 
-})
-
-var arrMonster = [Monster, Monster2, Monster3, Monster4, Monster5, Monster6]
+var arrMonsterPos =  [[3000,101],[1500,101],[5000,101],[5700,101],[10000,101],[8500,101]]
+var arrMonster = []
+for (var i = 0; i < arrMonsterPos.length; i++) {
+    var varname = "Monster" + (i+1);
+    varname = MainGame.NewEnemy({ // add goomba
+        name: "Goomba"+i,
+        x:arrMonsterPos[i][0],y:arrMonsterPos[i][1],
+        width:40,height:40, 
+        img: "./assets/img/goomba.png" 
+    })
+    arrMonster.push(varname)
+}
 
 // MainGame.NewEntity({ // add piece
 //     name: "Piece",
