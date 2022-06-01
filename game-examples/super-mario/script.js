@@ -195,6 +195,7 @@ function animate(){ // animate game
         }
         document.getElementById("game-container").style.opacity = "1" 
     } else {
+        isRunning = false
         document.getElementById("game-container").style.opacity = "0.5"
     }
 }
@@ -205,20 +206,19 @@ function startTimer(duration) {
     var display = document.querySelector('#time');
     timer = duration;
     setInterval(function () {
-        var seconds = parseInt(timer, 10);
-
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = seconds;
-
-        if (--timer < 0) {
-            timer = duration;
+        if (isRunning && timer > 0)  {
+            timer--;
+            var seconds = parseInt(timer, 10);
+    
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+            display.textContent = seconds;
         }
     }, 1000);
 }
 
 window.onload = function () {
-    startTimer(60 * 6-1);
+    startTimer(6*60);
     // Player1.teleport(6200,200)
 };
 
@@ -348,18 +348,9 @@ for (let i = 0; i <= 125; i++) { //ground
 
 var endflag = MainGame.NewEntity({
     name: "endflag",
-    x: 6800,y:MainGame.Canvas.height-650,
-    width: 100, height: 600,
+    x: 6800,y:MainGame.Canvas.height-450,
+    width: 100, height: 400,
     img: "./assets/img/endflag.png"
-})
-
-
-
-MainGame.NewEntity({
-    name: "peach",
-    x: 7150,y:MainGame.Canvas.height-175,
-    width: 100, height: 125,
-    img: "./assets/img/peach.png"
 })
 
 //world 2
@@ -397,9 +388,16 @@ for (let index = 1; index <= 120; index++) {
 
 var endflag2 = MainGame.NewEntity({
     name: "endflag2",
-    x: 14000,y:MainGame.Canvas.height-650,
-    width: 125, height: 600,
+    x: 14000,y:MainGame.Canvas.height-450,
+    width: 100, height: 400,
     img: "./assets/img/endflag.png"
+})
+
+MainGame.NewEntity({
+    name: "peach",
+    x: 14350,y:MainGame.Canvas.height-175,
+    width: 100, height: 125,
+    img: "./assets/img/peach.png"
 })
 
 
