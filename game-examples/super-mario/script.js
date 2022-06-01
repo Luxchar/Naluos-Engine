@@ -85,13 +85,6 @@ for (var i = 0; i < arrMonsterPos.length; i++) {
     arrMonster.push(varname)
 }
 
-// MainGame.NewEntity({ // add piece
-//     name: "Piece",
-//     x:700,y:101,
-//     width:40,height:40, 
-//     img: "./assets/img/piece.png"
-// })
-
 var isRunning = true 
 
 document.addEventListener('keydown', function(event){ //pause game
@@ -129,25 +122,21 @@ function animate(){ // animate game
         if(Player1.y >= MainGame.Canvas.height + 100){ //lose game
             maplevel = map[0]
             Player1.teleport(0,200)
-            for (var i = 0; i < arrMonster.length; i++) {
-                arrMonster[i].reset()
-            } 
+            MainGame.resetAllEnemies()
         }
 
         if (timer == 0) { // if timer is 0, stop game
             stopAnimate(handleGame)
         }
 
-        for (var i = 0; i < arrMonster.length; i++) { // check collision with player and monsters
-            if(arrMonster[i].checkCollisionTop({object: Player1})) arrMonster[i].delete(), score+=10, document.getElementById("score").innerHTML = score
-                if (Player1.x>=arrMonster[i].x-40 && Player1.x<=arrMonster[i].x+arrMonster[i].width && Math.floor(Player1.y)>=arrMonster[i].y-20 && Math.floor(Player1.y)<=arrMonster[i].y+arrMonster[i].height-20) { // if collision with goomba
+        var check = Player1.checkCollisionBottomList({objectList: arrMonster})
+        console.log(check[0])
+        if(check[0]) score+=10, document.getElementById("score").innerHTML = score, check[1].teleport(-500, 0)
+            if (Player1.checkCollisionFromInsideList({entityObjects: arrMonster})) { // if collision with goomba
                 maplevel = map[0]
                 Player1.teleport(0,200)
-                for (var i = 0; i < arrMonster.length; i++) {
-                    arrMonster[i].reset()
-                } 
+                MainGame.resetAllEnemies()
             }
-        }
         
         if (Player1.x >= endflag.x-100 && Player1.x <= endflag.x+100) { // if collision with endflag
             maplevel = map[1]
@@ -367,6 +356,5 @@ MainGame.NewEntity({
     width: 100, height: 125,
     img: "./assets/img/peach.png"
 })
-
 
 animate()

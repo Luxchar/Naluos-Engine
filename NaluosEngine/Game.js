@@ -165,7 +165,7 @@ export default class Game{
                 } else if (e.animations.get("left") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*this.frames,10,100,150, e.x, e.y, e.width, e.height)
                 } else if (e.animations.get("up") != undefined) { this.Context.drawImage(e.img,(e.img.width/6)*4,0,100,200, e.x, e.y, e.width, e.height)
                 } else if (e.animations.get("down") != undefined) { this.Context.drawImage(e.img,10+(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
-                } else this.Context.drawImage(e.img,(e.img.width/6)*5,0,100,150, e.x, e.y, e.width, e.height)
+                } else this.Context.drawImage(e.img,(e.img.width/6)*5,10,100,150, e.x, e.y, e.width, e.height)
 
             } else {
                 this.Context.rect(e.x, e.y, e.width, e.height)
@@ -218,5 +218,22 @@ export default class Game{
             sounds: this.Sounds,
             map: this.Entities,
         })
+    }
+
+    resetAllEnemies(){
+        this.Entities.forEach(element => {
+            if(element.isMonster){
+                element.teleport(element.save.x, element.save.y)
+                element.movements = { countX: 0, incrementX: 1, countY: 0, incrementY: 1}
+            }
+        });
+    }
+
+    resetAllEntities(){
+        this.Entities.forEach(element => {
+            if(element.isAEntity){
+                element.teleport(element.save.x, element.save.y)
+            }
+        });
     }
 }

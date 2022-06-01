@@ -122,9 +122,48 @@ export default class Entity{ //load entity with parameters
 
     checkCollisionTop({object}){
         if(object.oldPosition.y <  Math.floor(this.y - this.height) && object.y > Math.floor(this.y - this.height) && object.x >= this.x - this.width && object.x <= this.x + this.width){
-            this.teleport(0,-100)
-            this.map.delete(this.name)
             return true
+        }
+        return false
+    }
+
+    checkCollisionBottom({object}){
+        if(object.oldPosition.y <  Math.floor(this.y) && object.y > Math.floor(this.y) && object.x >= this.x - this.width && object.x <= this.x + this.width){
+            return true
+        }
+        return false
+    }
+
+    checkCollisionBottomList({objectList: objArray}){
+        for (let index = 0; index < objArray.length; index++) {
+            if(this.x + objArray[index].width/2 >=  objArray[index].x && this.x <= objArray[index].x - objArray[index].width/2 + objArray[index].width && this.oldPosition.y - this.height  <= objArray[index].y + objArray[index].height && this.y + this.height >= objArray[index].y + objArray[index].height){
+                return [true, objArray[index]]
+            }
+        }
+        return [false, null]
+    }
+
+    checkCollisionTopList({objectList: objArray}){
+        for (let index = 0; index < objArray.length; index++) {
+            if(objArray[index].oldPosition.y <  Math.floor(this.y - this.height) && objArray[index].y > Math.floor(this.y - this.height) && objArray[index].x >= this.x - this.width && objArray[index].x <= this.x + this.width){
+                return [true, objArray[index]]
+            }
+        }
+        return [false, null]
+    }
+
+    checkCollisionFromInside({entityObject: obj}){
+        if (this.x>=obj.x-40 && this.x<=obj.x+obj.width && Math.floor(this.y)>=obj.y-20 && Math.floor(this.y)<=obj.y+obj.height-20) {
+            return true
+        }
+        return false
+    }
+
+    checkCollisionFromInsideList({entityObjects: ArrayObj}){
+        for (let index = 0; index < ArrayObj.length; index++) {
+            if (this.x>=ArrayObj[index].x-40 && this.x<=ArrayObj[index].x+ArrayObj[index].width && Math.floor(this.y)>=ArrayObj[index].y-20 && Math.floor(this.y)<=ArrayObj[index].y+ArrayObj[index].height-20) {
+                return true
+            }
         }
         return false
     }
